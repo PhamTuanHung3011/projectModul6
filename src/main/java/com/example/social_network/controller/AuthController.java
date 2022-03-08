@@ -6,7 +6,7 @@ import com.example.social_network.dto.respon.JwtResponse;
 import com.example.social_network.dto.respon.ResponMess;
 import com.example.social_network.model.Role;
 import com.example.social_network.model.RoleName;
-import com.example.social_network.model.User;
+import com.example.social_network.model.Users;
 import com.example.social_network.security.jwt.JwtProvider;
 import com.example.social_network.security.userprincal.UserPrinciple;
 import com.example.social_network.service.IRoleService;
@@ -53,7 +53,7 @@ public class AuthController {
         if(iUserService.existsByEmail(signUpForm.getEmail())) {
             return new ResponseEntity<>(new ResponMess("The email existed! Please try again!"), HttpStatus.OK);
         }
-        User user = new User(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()));
+        Users user = new Users(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()));
         Set<String> strRole = signUpForm.getRoles();
         Set<Role> roles = new HashSet<>();
         strRole.forEach(role -> {

@@ -3,7 +3,7 @@ package com.example.social_network.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Data
@@ -12,10 +12,17 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
-    private boolean isPublic;
-    private String image;
-    private Date time;
+    private enum status{
+        EVERYONE,
+        ONLYME,
+        FRIENDS
+    }
+    private Date date_Post;
+    private int count_Like;
 
     @ManyToOne
-    private User user;
+    Users users;
+
+    @ManyToOne
+    Comment comment;
 }
