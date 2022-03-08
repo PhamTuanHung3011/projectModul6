@@ -16,5 +16,5 @@ public class Friend {
         TUCHOI
     }
     @ManyToOne
-    Users id_User1 ,id_User2;
+    Users User1 ,User2;
 }
