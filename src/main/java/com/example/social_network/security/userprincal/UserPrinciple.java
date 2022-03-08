@@ -1,6 +1,6 @@
 package com.example.social_network.security.userprincal;
 
-import com.example.social_network.model.User;
+import com.example.social_network.model.Users;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -50,7 +50,7 @@ public class UserPrinciple implements UserDetails {
         this.name = name;
     }
 
-    public static UserPrinciple build(User user) {
+    public static UserPrinciple build(Users user) {
         List<GrantedAuthority> authorityList = user.getRoles().stream().map(role ->
                 new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
         return new UserPrinciple(
