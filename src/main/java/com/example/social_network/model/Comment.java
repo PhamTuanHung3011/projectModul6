@@ -16,4 +16,7 @@ public class Comment {
 
     @ManyToOne
     Users users;
+
+    @ManyToOne
+    Post post;
 }

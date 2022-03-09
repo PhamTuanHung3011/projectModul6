@@ -1,16 +1,21 @@
 package com.example.social_network.controller;
 
+import com.example.social_network.dto.post_img.PostImgdto;
 import com.example.social_network.dto.respon.ResponMess;
 import com.example.social_network.model.CheckDate;
+import com.example.social_network.model.Image;
 import com.example.social_network.model.Post;
 import com.example.social_network.security.userprincal.UserDetailService;
 import com.example.social_network.service.IPostService;
+import com.example.social_network.service.ImageService.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static jdk.nashorn.internal.objects.NativeArray.forEach;
 
 @RestController
 @CrossOrigin("*")
@@ -21,6 +26,9 @@ public class PostController {
 
     @Autowired
     UserDetailService userDetailService;
+
+    @Autowired
+    IImageService imageService;
 
 
 //    cần hỏi lại cách xử lý thời gian trong sql;
@@ -35,10 +43,18 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Post> create(@RequestBody Post post) {
+    public ResponseEntity<?> create(@RequestBody PostImgdto post_imgdto) {
+        Post post = new Post(post_imgdto.getId(), post_imgdto.getContent(), post_imgdto.getDate_Post(), post_imgdto.getCount_Like(), post_imgdto.getUsers());
         CheckDate checkDate = new CheckDate();
-        post.setDate_Post(checkDate.getTimePost());
+        post_imgdto.setDate_Post(checkDate.getTimePost());
         postService.save(post);
+
+        for (Image img: post_imgdto.getListImage()) {
+            img.setUsers(post_imgdto.getUsers());
+            img.setPost(post);
+            imageService.saveImg(img);
+        }
+
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 

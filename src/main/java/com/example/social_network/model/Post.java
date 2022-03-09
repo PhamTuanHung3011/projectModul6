@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -14,6 +15,9 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+
+
+
     private enum status{
         EVERYONE,
         ONLYME,
@@ -25,6 +29,14 @@ public class Post {
     @ManyToOne
     Users users;
 
-    @ManyToOne
-    Comment comment;
+    public Post() {
+    }
+
+    public Post(Long id, String content, LocalDateTime date_Post, int count_Like, Users users) {
+        this.id = id;
+        this.content = content;
+        this.date_Post = date_Post;
+        this.count_Like = count_Like;
+        this.users = users;
+    }
 }
