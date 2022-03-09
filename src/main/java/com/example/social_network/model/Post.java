@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -17,7 +18,7 @@ public class Post {
         ONLYME,
         FRIENDS
     }
-    private Date date_Post;
+    private LocalDateTime date_Post;
     private int count_Like;
 
     @ManyToOne

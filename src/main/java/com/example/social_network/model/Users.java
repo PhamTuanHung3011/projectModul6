@@ -41,13 +41,13 @@ public class Users {
     @Size(max = 50)
     @Email
     private String email;
-    @NotBlank
+
     private String phone;
-    @NotBlank
+
     private Date birthday;
-    @NotBlank
+
     private String address;
-    @NotBlank
+
     private enum gender{
         MALE,
         FEMALE,

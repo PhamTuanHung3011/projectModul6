@@ -1,5 +1,6 @@
 package com.example.social_network.controller;
 
+import com.example.social_network.model.CheckDate;
 import com.example.social_network.model.Post;
 import com.example.social_network.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<Post> create(@RequestBody Post post) {
+        CheckDate checkDate = new CheckDate();
+        post.setDate_Post(checkDate.getTimePost());
         postService.save(post);
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
@@ -41,6 +44,8 @@ public class PostController {
     @PutMapping("/{id}")
     public ResponseEntity<Post> edit(@PathVariable Long id, @RequestBody Post post) {
         post.setId(id);
+        CheckDate checkDate = new CheckDate();
+        post.setDate_Post(checkDate.getTimePost());
         postService.save(post);
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
