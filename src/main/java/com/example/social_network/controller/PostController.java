@@ -17,9 +17,15 @@ public class PostController {
     @Autowired
     IPostService postService;
 
+//    cần hỏi lại cách xử lý thời gian trong sql;
+
+
+
+//    show list thì yêu cầu sắp xếp bài theo thời gian! (phục vụ trang home), trang tường nhà thiết kế sau( ý đồ xét lại list theo id user)
+//    phân trang theo pagination scroll
     @GetMapping
-    public ResponseEntity<List<Post>> products() {
-        return new ResponseEntity<>(postService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<Post>> findAllPost() {
+        return new ResponseEntity<>(postService.findByTimePost(), HttpStatus.OK);
     }
 
     @PostMapping
@@ -36,9 +42,9 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         postService.delete(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

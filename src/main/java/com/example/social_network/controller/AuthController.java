@@ -80,7 +80,7 @@ public class AuthController {
         });
         user.setRoles(roles);
         iUserService.save(user);
-        return new ResponseEntity<>(new ResponMess("create user success!"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponMess("yes"), HttpStatus.OK);
     }
 
     @PostMapping("/signin")
