@@ -1,7 +1,9 @@
 package com.example.social_network.controller;
 
+import com.example.social_network.dto.respon.ResponMess;
 import com.example.social_network.model.CheckDate;
 import com.example.social_network.model.Post;
+import com.example.social_network.security.userprincal.UserDetailService;
 import com.example.social_network.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,10 @@ import java.util.List;
 public class PostController {
     @Autowired
     IPostService postService;
+
+    @Autowired
+    UserDetailService userDetailService;
+
 
 //    cần hỏi lại cách xử lý thời gian trong sql;
 
@@ -48,11 +54,18 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> edit(@PathVariable Long id, @RequestBody Post post) {
-        post.setId(id);
-        CheckDate checkDate = new CheckDate();
-        post.setDate_Post(checkDate.getTimePost());
-        postService.save(post);
-        return new ResponseEntity<>(post, HttpStatus.OK);
+    public ResponseEntity<?> edit(@PathVariable Long id, @RequestBody Post post) {
+
+        if (post.getUsers().getId() == userDetailService.getCurrentUser().getId()) {
+            post.setId(id);
+            CheckDate checkDate = new CheckDate();
+            post.setDate_Post(checkDate.getTimePost());
+            postService.save(post);
+        }
+        else {
+            new ResponseEntity<>(new ResponMess("no"), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
