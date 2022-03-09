@@ -31,7 +31,9 @@ public class ImageController {
     }
 
     @PutMapping("/editImg/{id}")
-    public void editImg(@RequestBody Image image){
+    public ResponseEntity<Image> editImg(@RequestBody Image image,@PathVariable Long id){
+        image.setId(id);
         imageService.saveImg(image);
+        return new ResponseEntity<>(image, HttpStatus.OK);
     }
 }
