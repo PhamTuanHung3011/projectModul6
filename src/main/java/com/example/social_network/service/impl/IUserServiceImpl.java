@@ -29,8 +29,14 @@ public class IUserServiceImpl implements IUserService {
         return iUserRepo.existsByEmail(email);
     }
 
+
     @Override
     public Users save(Users user) {
         return iUserRepo.save(user);
+    }
+
+    @Override
+    public Users findUserById(Long id) {
+        return iUserRepo.findById(id).get();
     }
 }

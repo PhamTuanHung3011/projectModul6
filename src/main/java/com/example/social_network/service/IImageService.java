@@ -1,4 +1,4 @@
-package com.example.social_network.service.ImageService;
+package com.example.social_network.service;
 
 import com.example.social_network.model.Image;
 
