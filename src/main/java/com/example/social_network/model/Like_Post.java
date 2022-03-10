@@ -4,17 +4,17 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Data
 @Entity
-public class Likes {
+@Data
+public class Like_Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean isLike;
-    @OneToOne
-    private User user;
+    private int count_Like;
 
     @ManyToOne
-    private Post post;
+    Users users;
 
+    @ManyToOne
+    Post post;
 }

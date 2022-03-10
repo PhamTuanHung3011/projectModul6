@@ -6,15 +6,16 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Image {
+public class Like_Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String link;
+    private int count_Like;
 
     @ManyToOne
     Users users;
 
     @ManyToOne
-    Post post;
+    Comment comment;
+
 }

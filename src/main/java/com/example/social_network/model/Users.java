@@ -2,6 +2,7 @@ package com.example.social_network.model;
 
 
 
+import lombok.Data;
 import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +24,8 @@ import java.util.Set;
                 "email"
         })
 })
-public class User {
+@Data
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +41,18 @@ public class User {
     @Size(max = 50)
     @Email
     private String email;
+
+    private String phone;
+
+    private Date birthday;
+
+    private String address;
+
+    private enum gender{
+        MALE,
+        FEMALE,
+        ELSE
+    }
     @JsonIgnore
     @NotBlank
     @Size(min = 6, max = 100)
@@ -49,10 +64,10 @@ public class User {
     joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Role> roles = new HashSet<>();
 
-    public User() {
+    public Users() {
     }
 
-    public User(Long id, String name, String username, String email, String avatar, Set<Role> roles) {
+    public Users(Long id, String name, String username, String email, String avatar, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -61,7 +76,7 @@ public class User {
         this.roles = roles;
     }
 
-    public User(
+    public Users(
             @NotBlank @Size(min = 3, max = 30) String name,
             @NotBlank @Size(min = 5, max = 30) String username,
             @NotBlank @Size(max = 50) @Email String email,

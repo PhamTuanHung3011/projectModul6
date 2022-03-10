@@ -3,17 +3,20 @@ package com.example.social_network.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Date;
 
-@Data
 @Entity
+@Data
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
-    @ManyToOne
-    private User user;
+    private Date date_Comment;
 
     @ManyToOne
-    private Post post;
+    Users users;
+
+    @ManyToOne
+    Post post;
 }

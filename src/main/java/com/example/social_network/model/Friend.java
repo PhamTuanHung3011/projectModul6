@@ -6,15 +6,15 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Image {
+public class Friend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String link;
-
+    private enum status{
+        CHO,
+        DONGY,
+        TUCHOI
+    }
     @ManyToOne
-    Users users;
-
-    @ManyToOne
-    Post post;
+    Users User1 ,User2;
 }
