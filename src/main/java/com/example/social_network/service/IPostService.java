@@ -9,4 +9,5 @@ public interface IPostService {
     void save(Post post);
     void delete(Long id);
     Post findById(Long id);
+    List<Post> findByTimePost();
 }

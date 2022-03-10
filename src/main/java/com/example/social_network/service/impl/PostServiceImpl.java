@@ -32,4 +32,9 @@ public class PostServiceImpl implements IPostService {
     public Post findById(Long id) {
         return postRepo.findById(id).get();
     }
+
+    @Override
+    public List<Post> findByTimePost() {
+        return postRepo.findPostToTime();
+    }
 }
