@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 public class ImageController {
     @Autowired
     IImageService imageService;
@@ -22,6 +23,11 @@ public class ImageController {
     @DeleteMapping("/deleteImg/{id}")
     public void deleteImg(@PathVariable Long id){
         imageService.deleteImg(id);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Image> findById(@PathVariable Long id) {
+        return new ResponseEntity<>(imageService.findImg(id) , HttpStatus.OK);
     }
 
     @PostMapping("/createImg")
