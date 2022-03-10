@@ -3,19 +3,16 @@ package com.example.social_network.controller;
 import com.example.social_network.dto.post_img.PostImgdto;
 import com.example.social_network.dto.respon.ResponMess;
 import com.example.social_network.model.CheckDate;
-import com.example.social_network.model.Image;
 import com.example.social_network.model.Post;
 import com.example.social_network.security.userprincal.UserDetailService;
 import com.example.social_network.service.IPostService;
-import com.example.social_network.service.ImageService.IImageService;
+import com.example.social_network.service.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static jdk.nashorn.internal.objects.NativeArray.forEach;
 
 @RestController
 @CrossOrigin("*")

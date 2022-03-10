@@ -1,7 +1,7 @@
 package com.example.social_network.controller;
 
 import com.example.social_network.model.Image;
-import com.example.social_network.service.ImageService.IImageService;
+import com.example.social_network.service.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.example.social_network.controller;
 
 import com.example.social_network.model.Users;
-import com.example.social_network.service.UserService.IUserService;
+import com.example.social_network.service.impl.IUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    IUserService userService;
+    IUserServiceImpl userService;
 
     @PutMapping("/editUser/{id}")
     public ResponseEntity<Users> editUser(@RequestBody Users users, @PathVariable Long id){
         users.setId(id);
-        userService.editUser(users);
+        userService.save(users);
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
 
