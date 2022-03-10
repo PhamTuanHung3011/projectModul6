@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
+@RequestMapping("/image")
 public class ImageController {
     @Autowired
     IImageService imageService;
