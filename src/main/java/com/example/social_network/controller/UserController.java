@@ -2,7 +2,6 @@ package com.example.social_network.controller;
 
 import com.example.social_network.model.Users;
 import com.example.social_network.service.UserService.IUserService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
