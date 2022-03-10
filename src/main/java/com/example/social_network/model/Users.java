@@ -2,6 +2,7 @@ package com.example.social_network.model;
 
 
 
+import lombok.Data;
 import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
 

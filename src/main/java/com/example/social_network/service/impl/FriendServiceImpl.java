@@ -32,4 +32,10 @@ public class FriendServiceImpl implements IFriendService {
     public Friend findById(Long id) {
         return findById(id);
     }
+
+    @Override
+    public List<Friend> getListFriendRequest(Long id) {
+        return friendRepo.getListFriendRequest(id);
+    }
+
 }
