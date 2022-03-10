@@ -1,6 +1,6 @@
 package com.example.social_network.security.userprincal;
 
-import com.example.social_network.model.User;
+import com.example.social_network.model.Users;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -50,7 +50,7 @@ public class UserPrinciple implements UserDetails {
         this.name = name;
     }
 
-    public static UserPrinciple build(User user) {
+    public static UserPrinciple build(Users user) {
         List<GrantedAuthority> authorityList = user.getRoles().stream().map(role ->
                 new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
         return new UserPrinciple(
@@ -63,6 +63,39 @@ public class UserPrinciple implements UserDetails {
                 authorityList
         );
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
@@ -97,4 +130,5 @@ public class UserPrinciple implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

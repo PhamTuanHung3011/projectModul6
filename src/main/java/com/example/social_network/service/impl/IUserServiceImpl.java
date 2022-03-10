@@ -1,6 +1,6 @@
 package com.example.social_network.service.impl;
 
-import com.example.social_network.model.User;
+import com.example.social_network.model.Users;
 import com.example.social_network.ropository.IUserRepo;
 import com.example.social_network.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class IUserServiceImpl implements IUserService {
 
 
     @Override
-    public Optional<User> findByUsername(String name) {
+    public Optional<Users> findByUsername(String name) {
         return iUserRepo.findByUsername(name);
     }
 
@@ -30,7 +30,7 @@ public class IUserServiceImpl implements IUserService {
     }
 
     @Override
-    public User save(User user) {
+    public Users save(Users user) {
         return iUserRepo.save(user);
     }
 }
