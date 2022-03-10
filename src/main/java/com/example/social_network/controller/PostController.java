@@ -45,15 +45,14 @@ public class PostController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody PostImgdto post_imgdto) {
         Post post = new Post(post_imgdto.getId(), post_imgdto.getContent(), post_imgdto.getDate_Post(), post_imgdto.getCount_Like(), post_imgdto.getUsers());
-        CheckDate checkDate = new CheckDate();
-        post_imgdto.setDate_Post(checkDate.getTimePost());
-        postService.save(post);
 
-        for (Image img: post_imgdto.getListImage()) {
-            img.setUsers(post_imgdto.getUsers());
-            img.setPost(post);
-            imageService.saveImg(img);
-        }
+//        for (Image img: post_imgdto.getListImage()) {
+//            img.setUsers(post_imgdto.getUsers());
+//            img.setPost(post);
+//            imageService.saveImg(img);
+//        }
+        post.setDate_Post(CheckDate.getTimePost());
+        postService.save(post);
 
         return new ResponseEntity<>(post, HttpStatus.OK);
     }

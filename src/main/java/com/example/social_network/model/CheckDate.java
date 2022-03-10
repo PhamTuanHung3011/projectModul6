@@ -10,7 +10,7 @@ import java.time.LocalTime;
 
 
 public class CheckDate {
-    public LocalDateTime getTimePost() {
+    public static LocalDateTime getTimePost() {
         LocalDateTime today = LocalDateTime.of(LocalDate.now(), LocalTime.now());
         return today;
     }

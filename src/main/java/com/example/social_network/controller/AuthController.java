@@ -93,6 +93,7 @@ public class AuthController {
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         System.out.println("userPrinciple");
         System.out.println(userPrinciple);
-        return ResponseEntity.ok( new JwtResponse(token, userPrinciple.getName(), userPrinciple.getAuthorities()));
+//        trả kèm theo id;
+        return ResponseEntity.ok( new JwtResponse(userPrinciple.getId(), token, userPrinciple.getName(), userPrinciple.getAuthorities()));
     }
 }
