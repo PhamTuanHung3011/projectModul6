@@ -15,14 +15,9 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+    private StatusPost status;
 
 
-
-    private enum status{
-        EVERYONE,
-        ONLYME,
-        FRIENDS
-    }
     private LocalDateTime date_Post;
     private int count_Like;
 
