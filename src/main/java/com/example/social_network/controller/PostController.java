@@ -48,6 +48,7 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody PostImgdto post) {
+        System.out.println("vao ham create ko");
         Users users = iUserService.findUserById(post.getUsers().getId());
         post.setDate_Post(CheckDate.getTimePost());
         post.setUsers(users);
@@ -59,10 +60,6 @@ public class PostController {
             img.setPost(postNew);
             imageService.saveImg(img);
         }
-
-
-
-
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
