@@ -9,20 +9,21 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    IUserServiceImpl userService;
+    IUserServiceImpl iUserService;
 
     @PutMapping("/editUser/{id}")
     public ResponseEntity<Users> editUser(@RequestBody Users users, @PathVariable Long id){
         users.setId(id);
-        userService.save(users);
+        iUserService.save(users);
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Users> findById(@PathVariable Long id) {
-        return new ResponseEntity<>(userService.findUserById(id) , HttpStatus.OK);
+        return new ResponseEntity<>(iUserService.findUserById(id) , HttpStatus.OK);
     }
 }
