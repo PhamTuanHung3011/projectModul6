@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/user")
@@ -25,5 +27,9 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<Users> findById(@PathVariable Long id) {
         return new ResponseEntity<>(iUserService.findUserById(id) , HttpStatus.OK);
+    }
+    @GetMapping("/search/{name}")
+    public ResponseEntity<List<Users>> findNameUser(@PathVariable String name) {
+        return new ResponseEntity<>(iUserService.findUsersByName(name) , HttpStatus.OK);
     }
 }

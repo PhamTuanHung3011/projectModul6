@@ -10,11 +10,7 @@ public class Friend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private enum status{
-        CHO,
-        DONGY,
-        TUCHOI
-    }
-    @ManyToOne
-    Users User1 ,User2;
+    private int status;
+    private Long user1_id;
+    private Long user2_id;
 }
