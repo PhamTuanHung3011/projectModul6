@@ -1,5 +1,6 @@
 package com.example.social_network.dto.respon;
 
+import com.example.social_network.model.Users;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -9,6 +10,7 @@ public class JwtResponse {
     private String token;
     private String type = "Bearer";
     private String name;
+    private Users users;
     private Collection<? extends GrantedAuthority> roles;
 
     public JwtResponse() {
@@ -35,6 +37,11 @@ public class JwtResponse {
         this.type = type;
         this.name = name;
         this.roles = roles;
+    }
+
+    public JwtResponse(String token, Users users) {
+        this.token = token;
+        this.users = users;
     }
 
     public Long getId() {
@@ -75,5 +82,13 @@ public class JwtResponse {
 
     public void setRoles(Collection<? extends GrantedAuthority> roles) {
         this.roles = roles;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
 }
