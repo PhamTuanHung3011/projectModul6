@@ -3,12 +3,14 @@ package com.example.social_network.controller;
 import com.example.social_network.dto.post_img.PostImgdto;
 import com.example.social_network.dto.respon.ResponMess;
 import com.example.social_network.model.CheckDate;
+import com.example.social_network.model.Image;
 import com.example.social_network.model.Post;
 import com.example.social_network.model.Users;
 import com.example.social_network.security.userprincal.UserDetailService;
 import com.example.social_network.service.IPostService;
 import com.example.social_network.service.IImageService;
 import com.example.social_network.service.IUserService;
+import com.example.social_network.service.impl.IUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +32,7 @@ public class PostController {
     IImageService imageService;
 
     @Autowired
-    IUserService iUserService;
+    IUserServiceImpl iUserService;
 
 
 //    cần hỏi lại cách xử lý thời gian trong sql;
@@ -45,17 +47,21 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Post post, @PathVariable Long id) {
-        Users users = iUserService.findUserById(id);
-        post.setUsers(users);
-//        for (Image img: post_imgdto.getListImage()) {
-//            img.setUsers(post_imgdto.getUsers());
-//            img.setPost(post);
-//            imageService.saveImg(img);
-//        }
-
+    public ResponseEntity<?> create(@RequestBody PostImgdto post) {
+        Users users = iUserService.findUserById(post.getUsers().getId());
         post.setDate_Post(CheckDate.getTimePost());
-        postService.save(post);
+        post.setUsers(users);
+        Post postNew = PostImgdto.bulldPost(post);
+        postService.save(postNew);
+
+        for (Image img: post.getListImage()) {
+            img.setUsers(post.getUsers());
+            img.setPost(postNew);
+            imageService.saveImg(img);
+        }
+
+
+
 
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
