@@ -18,16 +18,13 @@ public class UserPrinciple implements UserDetails {
     @JsonIgnore
     private String password;
     private String avatar;
-
-    public Collection<? extends GrantedAuthority> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection<? extends GrantedAuthority> roles) {
-        this.roles = roles;
-    }
-
     private Collection<? extends GrantedAuthority> roles;
+
+
+
+
+
+
 
     public UserPrinciple() {
     }
@@ -51,7 +48,7 @@ public class UserPrinciple implements UserDetails {
     }
 
     public static UserPrinciple build(Users user) {
-        List<GrantedAuthority> authorityList = user.getRoles().stream().map(role ->
+        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
                 new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
         return new UserPrinciple(
                 user.getId(),
@@ -60,7 +57,7 @@ public class UserPrinciple implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 user.getAvatar(),
-                authorityList
+                authorities
         );
     }
 

@@ -1,6 +1,7 @@
 package com.example.social_network.dto.post_img;
 
 import com.example.social_network.model.Image;
+import com.example.social_network.model.Post;
 import com.example.social_network.model.Users;
 import lombok.Data;
 
@@ -25,4 +26,8 @@ public class PostImgdto {
     Users users;
 
     List<Image> listImage;
+
+    static public Post bulldPost(PostImgdto post){
+        return new Post(post.getId(), post.getContent(),post.getDate_Post(),post.getCount_Like(),post.getUsers());
+    }
 }

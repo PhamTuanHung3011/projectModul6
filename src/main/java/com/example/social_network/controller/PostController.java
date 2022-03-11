@@ -3,10 +3,14 @@ package com.example.social_network.controller;
 import com.example.social_network.dto.post_img.PostImgdto;
 import com.example.social_network.dto.respon.ResponMess;
 import com.example.social_network.model.CheckDate;
+import com.example.social_network.model.Image;
 import com.example.social_network.model.Post;
+import com.example.social_network.model.Users;
 import com.example.social_network.security.userprincal.UserDetailService;
 import com.example.social_network.service.IPostService;
 import com.example.social_network.service.IImageService;
+import com.example.social_network.service.IUserService;
+import com.example.social_network.service.impl.IUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +31,9 @@ public class PostController {
     @Autowired
     IImageService imageService;
 
+    @Autowired
+    IUserServiceImpl iUserService;
+
 
 //    cần hỏi lại cách xử lý thời gian trong sql;
 
@@ -40,16 +47,21 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody PostImgdto post_imgdto) {
-        Post post = new Post(post_imgdto.getId(), post_imgdto.getContent(), post_imgdto.getDate_Post(), post_imgdto.getCount_Like(), post_imgdto.getUsers());
-
-//        for (Image img: post_imgdto.getListImage()) {
-//            img.setUsers(post_imgdto.getUsers());
-//            img.setPost(post);
-//            imageService.saveImg(img);
-//        }
+    public ResponseEntity<?> create(@RequestBody PostImgdto post) {
+        Users users = iUserService.findUserById(post.getUsers().getId());
         post.setDate_Post(CheckDate.getTimePost());
-        postService.save(post);
+        post.setUsers(users);
+        Post postNew = PostImgdto.bulldPost(post);
+        postService.save(postNew);
+
+        for (Image img: post.getListImage()) {
+            img.setUsers(post.getUsers());
+            img.setPost(postNew);
+            imageService.saveImg(img);
+        }
+
+
+
 
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
