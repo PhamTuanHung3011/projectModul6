@@ -37,7 +37,11 @@ public class FriendController {
 
         return new ResponseEntity<>(friend, HttpStatus.OK);
     }
-
+//    @GetMapping("/mutualfriend/{id}")
+//     public ResponseEntity<List<Friend>> getMutualFriend(@PathVariable Long id,@RequestBody Friend friend){
+//        return friendService.getListFriendRequest()
+//
+//    }
 
 
     @PostMapping
