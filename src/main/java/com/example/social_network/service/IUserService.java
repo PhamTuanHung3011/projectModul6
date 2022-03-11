@@ -9,4 +9,6 @@ public interface IUserService {
     Boolean existsByUsername(String username);// kiem tra co ton tai hay ko
     Boolean existsByEmail(String email);// kiem tra email
     Users save(Users user);
+
+    Users findUserById(Long id);
 }

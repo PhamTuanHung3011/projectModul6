@@ -1,14 +1,15 @@
-package com.example.social_network.service.ImageService;
+package com.example.social_network.service.impl;
 
 import com.example.social_network.model.Image;
 import com.example.social_network.ropository.ImageRepository.IImageRepo;
+import com.example.social_network.service.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ImageService implements IImageService{
+public class ImageServiceImpl implements IImageService {
     @Autowired
     IImageRepo imageRepo;
 
