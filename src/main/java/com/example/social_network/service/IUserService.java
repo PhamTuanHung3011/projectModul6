@@ -2,7 +2,6 @@ package com.example.social_network.service;
 
 import com.example.social_network.model.Users;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
@@ -12,6 +11,5 @@ public interface IUserService {
     Users save(Users user);
 
     Users findUserById(Long id);
-
-    List<Users> getListUser();
+    Users findById(Long id);
 }

@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/user")
@@ -16,6 +14,8 @@ public class UserController {
 
     @Autowired
     IUserServiceImpl iUserService;
+
+
 
 
     @PutMapping("/editUser/{id}")
@@ -29,4 +29,6 @@ public class UserController {
     public ResponseEntity<Users> findById(@PathVariable Long id) {
         return new ResponseEntity<>(iUserService.findUserById(id) , HttpStatus.OK);
     }
+
+
 }

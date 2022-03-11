@@ -10,6 +10,7 @@ import com.example.social_network.model.Users;
 import com.example.social_network.security.jwt.JwtProvider;
 import com.example.social_network.security.userprincal.UserPrinciple;
 import com.example.social_network.service.IRoleService;
+import com.example.social_network.service.IUserService;
 import com.example.social_network.service.impl.IUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,7 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
 
+
     @PostMapping("/signup")
     public ResponseEntity<?> register(@Valid @RequestBody SignUpForm signUpForm) {
         if (iUserService.existsByUsername(signUpForm.getUsername())) {
@@ -75,7 +77,6 @@ public class AuthController {
                             () -> new RuntimeException(" Role user not found")
                     );
                     roles.add(userRole);
-
             }
         });
         user.setRoles(roles);
@@ -93,7 +94,8 @@ public class AuthController {
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         System.out.println("userPrinciple");
         System.out.println(userPrinciple);
+        Users users = iUserService.findByUsername(userPrinciple.getUsername()).get();
 //        trả kèm theo id;
-        return ResponseEntity.ok( new JwtResponse(userPrinciple.getId(), token, userPrinciple.getName(), userPrinciple.getAuthorities()));
+        return ResponseEntity.ok( new JwtResponse(token, users));
     }
 }

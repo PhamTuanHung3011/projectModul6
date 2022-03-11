@@ -1,8 +1,11 @@
 package com.example.social_network.service.impl;
 
 import com.example.social_network.model.Post;
+import com.example.social_network.model.Users;
 import com.example.social_network.ropository.PostRepo;
+import com.example.social_network.security.userprincal.UserDetailService;
 import com.example.social_network.service.IPostService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,8 @@ import java.util.List;
 public class PostServiceImpl implements IPostService {
     @Autowired
     PostRepo postRepo;
+    @Autowired
+    UserDetailService userDetailService;
 
     @Override
     public List<Post> findAll() {
@@ -19,8 +24,8 @@ public class PostServiceImpl implements IPostService {
     }
 
     @Override
-    public void save(Post product) {
-        postRepo.save(product);
+    public Post save(Post post) {
+       return postRepo.save(post);
     }
 
     @Override
@@ -37,4 +42,5 @@ public class PostServiceImpl implements IPostService {
     public List<Post> findByTimePost() {
         return postRepo.findPostToTime();
     }
+
 }
