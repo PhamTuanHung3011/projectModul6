@@ -75,7 +75,6 @@ public class AuthController {
                             () -> new RuntimeException(" Role user not found")
                     );
                     roles.add(userRole);
-
             }
         });
         user.setRoles(roles);
