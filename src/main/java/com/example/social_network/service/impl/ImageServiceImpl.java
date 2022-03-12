@@ -32,4 +32,11 @@ public class ImageServiceImpl implements IImageService {
     public Image findImg(Long id) {
         return imageRepo.findById(id).get();
     }
+
+    @Override
+    public List<Image> findListImgByPostId(Long id) {
+        return imageRepo.findListImgByPostId(id);
+    }
+
+
 }

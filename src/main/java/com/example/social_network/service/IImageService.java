@@ -9,4 +9,5 @@ public interface IImageService {
     void saveImg(Image image);
     void deleteImg(Long id);
     Image findImg(Long id);
+    List<Image> findListImgById(Long id);
 }

@@ -11,6 +11,7 @@ import com.example.social_network.service.IPostService;
 import com.example.social_network.service.IImageService;
 import com.example.social_network.service.IUserService;
 import com.example.social_network.service.impl.IUserServiceImpl;
+import com.example.social_network.service.impl.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ import java.util.List;
 @RequestMapping("post")
 public class PostController {
     @Autowired
-    IPostService postService;
+    PostServiceImpl postService;
 
     @Autowired
     UserDetailService userDetailService;
@@ -42,9 +43,18 @@ public class PostController {
 //    show list thì yêu cầu sắp xếp bài theo thời gian! (phục vụ trang home), trang tường nhà thiết kế sau( ý đồ xét lại list theo id user)
 //    phân trang theo pagination scroll
     @GetMapping
-    public ResponseEntity<List<Post>> findAllPost() {
-        return new ResponseEntity<>(postService.findByTimePost(), HttpStatus.OK);
+    public ResponseEntity<List<PostImgdto>> findAllPost() {
+        List<Post> postList = postService.findByTimePost();
+        return new ResponseEntity<>( HttpStatus.OK);
     }
+
+   @GetMapping("/{idUser}")
+   public ResponseEntity <List<Post>> findPostByUserId(@PathVariable Long idUser) {
+       List<Post> postListByUserId =  postService.findPostByUserId(idUser);
+       return new ResponseEntity<>( HttpStatus.OK);
+   }
+
+
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody PostImgdto post) {
@@ -60,11 +70,10 @@ public class PostController {
             imageService.saveImg(img);
         }
 
-
-
-
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Post> findById(@PathVariable Long id) {
@@ -85,6 +94,8 @@ public class PostController {
             CheckDate checkDate = new CheckDate();
             post.setDate_Post(checkDate.getTimePost());
             postService.save(post);
+            System.out.println("getCurrentUser");
+            System.out.println(userDetailService.getCurrentUser());
         }
         else {
             new ResponseEntity<>(new ResponMess("no"), HttpStatus.OK);

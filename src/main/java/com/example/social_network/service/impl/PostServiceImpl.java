@@ -1,5 +1,6 @@
 package com.example.social_network.service.impl;
 
+import com.example.social_network.model.Image;
 import com.example.social_network.model.Post;
 import com.example.social_network.model.Users;
 import com.example.social_network.ropository.PostRepo;
@@ -17,6 +18,9 @@ public class PostServiceImpl implements IPostService {
     PostRepo postRepo;
     @Autowired
     UserDetailService userDetailService;
+
+    @Autowired
+    ImageServiceImpl imageServiceImpl;
 
     @Override
     public List<Post> findAll() {
@@ -42,5 +46,19 @@ public class PostServiceImpl implements IPostService {
     public List<Post> findByTimePost() {
         return postRepo.findPostToTime();
     }
+
+    public List<Post> findPostByUserId(Long id) {
+        long idPost;
+        List<Post> listPostByUserId =  postRepo.findPostByUserId(id);
+        for (int i = 0; i < listPostByUserId.size(); i++) {
+            idPost =  listPostByUserId.get(i).getId();
+
+            List<Image> listImgByPostId = imageServiceImpl.findListImgByPostId(idPost);
+        }
+        return null;
+    }
+
+
+
 
 }
