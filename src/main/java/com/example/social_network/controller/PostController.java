@@ -56,6 +56,7 @@ public class PostController {
         postService.save(postNew);
 
         for (Image img: post.getListImage()) {
+            img.setLink((img.getLink()));
             img.setUsers(post.getUsers());
             img.setPost(postNew);
             imageService.saveImg(img);

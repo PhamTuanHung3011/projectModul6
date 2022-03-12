@@ -1,6 +1,7 @@
 package com.example.social_network.service.impl;
 
 import com.example.social_network.model.Comment;
+import com.example.social_network.model.Post;
 import com.example.social_network.ropository.CommentRepo;
 import com.example.social_network.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,10 @@ public class CommentServiceImpl implements ICommentService {
     @Override
     public Comment findById(Long id) {
         return commentRepo.findById(id).get();
+    }
+
+    @Override
+    public List<Comment> findByTimePost() {
+        return commentRepo.findCommentToTime();
     }
 }
