@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IImageRepo extends JpaRepository<Image , Long> {
+public interface IImageRepo extends JpaRepository<Image, Long> {
 
 
-    @Query(nativeQuery=true, value= "select * from image where image.post_id =: post_id;")
-    List<Image> findListImgByPostId(@Param("post_id") Long post_id);
+    @Query(nativeQuery = true, value = "select * from image where image.post_id = :id")
+    List<Image> findListImgByPostId(@Param("id") Long id);
 
 }

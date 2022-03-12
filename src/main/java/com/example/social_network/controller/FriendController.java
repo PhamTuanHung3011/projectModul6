@@ -23,6 +23,7 @@ public class FriendController {
 
     @PostMapping
     public ResponseEntity<Friend> create(@RequestBody Friend friend) {
+
         friendService.save(friend);
         return new ResponseEntity<>(friend, HttpStatus.OK);
     }
