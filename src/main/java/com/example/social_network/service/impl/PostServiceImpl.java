@@ -22,6 +22,9 @@ public class PostServiceImpl implements IPostService {
     @Autowired
     ImageServiceImpl imageServiceImpl;
 
+    @Autowired
+    CommentServiceImpl commentService;
+
 
     @Override
     public List<Post> findAll() {
@@ -43,6 +46,8 @@ public class PostServiceImpl implements IPostService {
         return null;
     }
 
+
+
 //    @Override
 //    public Post findById(Long id) {
 //        return postRepo.findById(id).get();
@@ -55,7 +60,9 @@ public class PostServiceImpl implements IPostService {
         List<PostImgdto> allPostDtos = new ArrayList<>();
 
         for (Post post : posts) {
-            PostImgdto postDto = new PostImgdto(post.getId(), post.getContent(), post.getDate_Post(), post.getCount_Like(), post.getUsers(),imageServiceImpl.findListImgByPostId(post.getId()));
+            PostImgdto postDto = new PostImgdto(post.getId(), post.getContent(), post.getDate_Post(), post.getCount_Like(), post.getUsers()
+                    , imageServiceImpl.findListImgByPostId(post.getId())
+                    , commentService.findListCommentByIdPost(post.getId()));
             allPostDtos.add(postDto);
         }
         return allPostDtos;

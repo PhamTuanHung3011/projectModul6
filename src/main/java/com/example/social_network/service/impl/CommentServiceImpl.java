@@ -32,4 +32,9 @@ public class CommentServiceImpl implements ICommentService {
     public Comment findById(Long id) {
         return commentRepo.findById(id).get();
     }
+
+    @Override
+    public List<Comment> findListCommentByIdPost(Long id) {
+        return commentRepo.findListCommentByPostId(id);
+    }
 }
