@@ -7,10 +7,9 @@ import com.example.social_network.model.Image;
 import com.example.social_network.model.Post;
 import com.example.social_network.model.Users;
 import com.example.social_network.security.userprincal.UserDetailService;
-import com.example.social_network.service.IPostService;
 import com.example.social_network.service.IImageService;
-import com.example.social_network.service.IUserService;
 import com.example.social_network.service.impl.IUserServiceImpl;
+import com.example.social_network.service.impl.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ import java.util.List;
 @RequestMapping("post")
 public class PostController {
     @Autowired
-    IPostService postService;
+    PostServiceImpl postService;
 
     @Autowired
     UserDetailService userDetailService;
@@ -42,13 +41,21 @@ public class PostController {
 //    show list thì yêu cầu sắp xếp bài theo thời gian! (phục vụ trang home), trang tường nhà thiết kế sau( ý đồ xét lại list theo id user)
 //    phân trang theo pagination scroll
     @GetMapping
-    public ResponseEntity<List<Post>> findAllPost() {
-        return new ResponseEntity<>(postService.findByTimePost(), HttpStatus.OK);
+    public ResponseEntity<List<PostImgdto>> findAllPost() {
+        List<PostImgdto> postList = postService.findByTimePost();
+        return new ResponseEntity<>(postList, HttpStatus.OK);
     }
+
+   @GetMapping("/findAllByUserId/{idUser}")
+   public ResponseEntity <List<PostImgdto>> findPostByUserId(@PathVariable Long idUser) {
+       List<PostImgdto> postListByUserId =  postService.findPostByUserCurrentId(idUser);
+       return new ResponseEntity<>(postListByUserId, HttpStatus.OK);
+   }
+
+
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody PostImgdto post) {
-        System.out.println("vao ham create ko");
         Users users = iUserService.findUserById(post.getUsers().getId());
         post.setDate_Post(CheckDate.getTimePost());
         post.setUsers(users);
@@ -56,13 +63,15 @@ public class PostController {
         postService.save(postNew);
 
         for (Image img: post.getListImage()) {
-            img.setLink((img.getLink()));
             img.setUsers(post.getUsers());
             img.setPost(postNew);
             imageService.saveImg(img);
         }
+
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Post> findById(@PathVariable Long id) {
@@ -76,13 +85,26 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> edit(@PathVariable Long id, @RequestBody Post post) {
+    public ResponseEntity<PostImgdto> edit(@PathVariable Long id, @RequestBody PostImgdto post_dto) {
+        Post postNew = PostImgdto.bulldPost(post_dto);
+        if (post_dto.getUsers().getId() == userDetailService.getCurrentUser().getId()) {
 
-        if (post.getUsers().getId() == userDetailService.getCurrentUser().getId()) {
-            post.setId(id);
+            post_dto.setId(id);
             CheckDate checkDate = new CheckDate();
-            post.setDate_Post(checkDate.getTimePost());
-            postService.save(post);
+            post_dto.setDate_Post(checkDate.getTimePost());
+            for (int i = 0; i <postService.findAll().size() ; i++) {
+                if(postService.findAll().get(i).getId() == post_dto.getId()) {
+                    postService.save(postNew);
+                    for (Image img: post_dto.getListImage()) {
+                        img.setUsers(post_dto.getUsers());
+                        img.setPost(postNew);
+                        imageService.saveImg(img);
+                    }
+                }
+            }
+
+            System.out.println("getCurrentUser");
+            System.out.println(userDetailService.getCurrentUser());
         }
         else {
             new ResponseEntity<>(new ResponMess("no"), HttpStatus.OK);

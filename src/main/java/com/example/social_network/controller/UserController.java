@@ -18,9 +18,8 @@ public class UserController {
 
 
 
-    @PutMapping("/editUser/{id}")
-    public ResponseEntity<Users> editUser(@RequestBody Users users, @PathVariable Long id){
-        users.setId(id);
+    @PutMapping("/editUser")
+    public ResponseEntity<Users> editUser(@RequestBody Users users){
         iUserService.save(users);
         return new ResponseEntity<>(users,HttpStatus.OK);
     }

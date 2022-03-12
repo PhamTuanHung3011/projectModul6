@@ -30,4 +30,13 @@ public class PostImgdto {
     static public Post bulldPost(PostImgdto post){
         return new Post(post.getId(), post.getContent(),post.getDate_Post(),post.getCount_Like(),post.getUsers());
     }
+
+    public PostImgdto(Long id, String content, LocalDateTime date_Post, int count_Like, Users users, List<Image> listImage) {
+        this.id = id;
+        this.content = content;
+        this.date_Post = date_Post;
+        this.count_Like = count_Like;
+        this.users = users;
+        this.listImage = listImage;
+    }
 }
