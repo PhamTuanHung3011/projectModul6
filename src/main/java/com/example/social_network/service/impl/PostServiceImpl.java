@@ -61,8 +61,8 @@ public class PostServiceImpl implements IPostService {
 
         for (Post post : posts) {
             PostImgdto postDto = new PostImgdto(post.getId(), post.getContent(), post.getDate_Post(), post.getCount_Like(), post.getUsers()
-                    , imageServiceImpl.findListImgByPostId(post.getId())
-                    , commentService.findListCommentByIdPost(post.getId()));
+                    , imageServiceImpl.findListImgByPostId(post.getId()));
+//                    , commentService.findListCommentByIdPost(post.getId()));
             allPostDtos.add(postDto);
         }
         return allPostDtos;

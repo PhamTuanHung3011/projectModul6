@@ -41,13 +41,13 @@ public class PostImgdto {
         this.listImage = listImage;
     }
 
-    public PostImgdto(Long id, String content, LocalDateTime date_Post, int count_Like, Users users, List<Image> listImage, List<Comment> listComment) {
-        this.id = id;
-        this.content = content;
-        this.date_Post = date_Post;
-        this.count_Like = count_Like;
-        this.users = users;
-        this.listImage = listImage;
-        this.listComment = listComment;
-    }
+//    public PostImgdto(Long id, String content, LocalDateTime date_Post, int count_Like, Users users, List<Image> listImage, List<Comment> listComment) {
+//        this.id = id;
+//        this.content = content;
+//        this.date_Post = date_Post;
+//        this.count_Like = count_Like;
+//        this.users = users;
+//        this.listImage = listImage;
+//        this.listComment = listComment;
+//    }
 }
