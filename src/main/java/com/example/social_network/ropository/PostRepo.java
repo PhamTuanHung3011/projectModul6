@@ -17,7 +17,7 @@ public interface PostRepo extends JpaRepository<Post, Long> {
     @Query(nativeQuery = true, value = "select * from socialnetwork.post where post.users_id =:users_id ")
     List<Post> findPostByUserId(@Param("users_id") Long users_id);
 
-
+    Post findPostById(Long postId);
 
 
 }

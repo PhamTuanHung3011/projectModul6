@@ -4,8 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
+
 
 
 @Entity
@@ -15,23 +14,22 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
-    private StatusPost status;
-
-
+    private String status;
     private LocalDateTime date_Post;
     private int count_Like;
 
     @ManyToOne
     Users users;
 
-    public Post() {
-    }
-
-    public Post(Long id, String content, LocalDateTime date_Post, int count_Like, Users users) {
+    public Post(Long id, String content, LocalDateTime date_post, int count_like, Users users) {
         this.id = id;
         this.content = content;
-        this.date_Post = date_Post;
-        this.count_Like = count_Like;
+        this.date_Post = date_post;
+        this.count_Like = count_like;
         this.users = users;
+    }
+
+    public Post() {
+
     }
 }
