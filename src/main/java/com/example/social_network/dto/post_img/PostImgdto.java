@@ -39,6 +39,4 @@ public class PostImgdto {
         this.users = users;
         this.listImage = listImage;
     }
-
-
 }
