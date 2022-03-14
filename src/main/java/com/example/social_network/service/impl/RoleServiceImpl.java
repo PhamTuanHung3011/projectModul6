@@ -18,4 +18,6 @@ public class RoleServiceImpl implements IRoleService {
     public Optional<Role> findByName(RoleName name) {
         return iRoleRepo.findByName(name);
     }
+
+
 }
