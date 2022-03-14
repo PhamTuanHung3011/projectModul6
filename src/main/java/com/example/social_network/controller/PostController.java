@@ -56,7 +56,8 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody PostImgdto post) {
-        Users users = iUserService.findUserById(post.getUsers().getId());
+
+        Users users =iUserService.findUserById(post.getUsers().getId())  ;
         post.setDate_Post(CheckDate.getTimePost());
         post.setUsers(users);
         Post postNew = PostImgdto.bulldPost(post);
@@ -86,29 +87,29 @@ public class PostController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PostImgdto> edit(@PathVariable Long id, @RequestBody PostImgdto post_dto) {
-        Post postNew = PostImgdto.bulldPost(post_dto);
-        if (post_dto.getUsers().getId() == userDetailService.getCurrentUser().getId()) {
-
-            post_dto.setId(id);
-            CheckDate checkDate = new CheckDate();
-            post_dto.setDate_Post(checkDate.getTimePost());
-            for (int i = 0; i <postService.findAll().size() ; i++) {
-                if(postService.findAll().get(i).getId() == post_dto.getId()) {
-                    postService.save(postNew);
-                    for (Image img: post_dto.getListImage()) {
-                        img.setUsers(post_dto.getUsers());
-                        img.setPost(postNew);
-                        imageService.saveImg(img);
-                    }
-                }
-            }
-
-            System.out.println("getCurrentUser");
-            System.out.println(userDetailService.getCurrentUser());
-        }
-        else {
-            new ResponseEntity<>(new ResponMess("no"), HttpStatus.OK);
-        }
+//        Post postNew = PostImgdto.bulldPost(post_dto);
+//        if (post_dto.getUsers().getId() == userDetailService.getCurrentUser().getId()) {
+//
+//            post_dto.setId(id);
+//            CheckDate checkDate = new CheckDate();
+//            post_dto.setDate_Post(checkDate.getTimePost());
+//            for (int i = 0; i <postService.findAll().size() ; i++) {
+//                if(postService.findAll().get(i).getId() == post_dto.getId()) {
+//                    postService.save(postNew);
+//                    for (Image img: post_dto.getListImage()) {
+//                        img.setUsers(post_dto.getUsers());
+//                        img.setPost(postNew);
+//                        imageService.saveImg(img);
+//                    }
+//                }
+//            }
+//
+//            System.out.println("getCurrentUser");
+//            System.out.println(userDetailService.getCurrentUser());
+//        }
+//        else {
+//            new ResponseEntity<>(new ResponMess("no"), HttpStatus.OK);
+//        }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
