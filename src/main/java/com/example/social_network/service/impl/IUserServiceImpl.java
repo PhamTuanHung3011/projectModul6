@@ -6,6 +6,7 @@ import com.example.social_network.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,6 +40,13 @@ public class IUserServiceImpl implements IUserService {
     public Users findById(Long id) {
         return iUserRepo.findById(id).get();
     }
+
+    @Override
+    public List<Users> findUserByUserName(String userName) {
+        return iUserRepo.findUserByUsername(userName);
+    }
+
+
 
     @Override
     public Users findUserById(Long id) {

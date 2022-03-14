@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -86,31 +87,34 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostImgdto> edit(@PathVariable Long id, @RequestBody PostImgdto post_dto) {
-//        Post postNew = PostImgdto.bulldPost(post_dto);
-//        if (post_dto.getUsers().getId() == userDetailService.getCurrentUser().getId()) {
-//
-//            post_dto.setId(id);
-//            CheckDate checkDate = new CheckDate();
-//            post_dto.setDate_Post(checkDate.getTimePost());
-//            for (int i = 0; i <postService.findAll().size() ; i++) {
-//                if(postService.findAll().get(i).getId() == post_dto.getId()) {
-//                    postService.save(postNew);
-//                    for (Image img: post_dto.getListImage()) {
-//                        img.setUsers(post_dto.getUsers());
-//                        img.setPost(postNew);
-//                        imageService.saveImg(img);
-//                    }
+    public ResponseEntity<Post> edit(@PathVariable Long id, @RequestBody PostImgdto post_dto) {
+        Post post = postService.findById(post_dto.getId());
+        Users user = iUserService.findById(post_dto.getUsers().getId());
+        post.setContent(post_dto.getContent());
+        post.setCount_Like(post_dto.getCount_Like());
+        post.setUsers(user);
+
+        CheckDate checkDate = new CheckDate();
+        post.setDate_Post(checkDate.getTimePost());
+
+//        List<Image> listimageEdit = new ArrayList<>();
+//         for (int i = 0; i < postService.findAll().size(); i++) {
+//            if (postService.findAll().get(i).getId() == post_dto.getId()) {
+//                for (Image img : post_dto.getListImage()) {
+//                    img.setUsers(post_dto.getUsers());
+//                    imageService.saveImg(img);
 //                }
 //            }
-//
-//            System.out.println("getCurrentUser");
-//            System.out.println(userDetailService.getCurrentUser());
 //        }
-//        else {
-//            new ResponseEntity<>(new ResponMess("no"), HttpStatus.OK);
-//        }
+//        List<Image> imageListEdit = imageService.findListImgByPostId(post_dto.getId());
 
-        return new ResponseEntity<>(HttpStatus.OK);
+
+//        post_dto.getListImage();
+
+        postService.save(post);
+        System.out.println("getCurrentUser");
+        System.out.println(userDetailService.getCurrentUser());
+        return new ResponseEntity<>(post,HttpStatus.OK);
     }
+
 }

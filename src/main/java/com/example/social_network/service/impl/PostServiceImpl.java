@@ -91,5 +91,10 @@ public class PostServiceImpl implements IPostService {
     }
 
 
+    public PostImgdto editPostDto(PostImgdto postDto) {
+         Post post = new Post(postDto.getId(), postDto.getContent(), postDto.getDate_Post(), postDto.getCount_Like(), postDto.getUsers());
+         return null;
+    }
+
 
 }
