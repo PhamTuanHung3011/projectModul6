@@ -13,6 +13,5 @@ public interface IUserService {
 
     Users findUserById(Long id);
     Users findById(Long id);
-
-    List<Users> findUserByUserName(String userName);
+    List<Users> getAll();
 }

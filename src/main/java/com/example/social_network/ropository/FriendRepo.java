@@ -4,15 +4,20 @@ import com.example.social_network.model.Friend;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
 public interface FriendRepo extends JpaRepository<Friend, Long> {
-    @Query(value = "select f from Friend f where f.id_user2 = :id and f.status = 1")
-     List<Friend> getListFriendRequest(@Param("id") Long id);
-////    @Query(value = "select u from Users  u join Friend f on u.id = f.id_user1 ")
-//    @Query(value = "select Users.name,Users.avatar,Users.address from Users join Friend on Users.id = Users.id where (Friend.id_user1 = Users.id and Friend.id_user2 = Users.id)")
-//    List<Friend> getAllMutualFriend();
+    // danh sách bạn bè chưa kb
+    @Query(nativeQuery = true, value = "select * from friend where (friend.user1_id =:User1 or friend.user2_id =:User1)  and friend.status in (0,1)")
+    public List<Friend> findFriendById(@Param(value = "User1") Long id1);
+
+    // danh sách bạn bè kb
+    @Query(nativeQuery = true, value = "select * from friend where (friend.user1_id =:User1 or friend.user2_id =:User1)  and friend.status = 1")
+    public List<Friend> findFriendByUser1AndUser2(@Param(value = "User1") Long id1);
+
+      // danh sách bạn bè chờ kb
+    @Query(nativeQuery = true, value = "select * from friend where (friend.user1_id =:User1)  and friend.status = 0")
+    public List<Friend> findFriendByUser1(@Param(value = "User1") Long id1);
 
 }

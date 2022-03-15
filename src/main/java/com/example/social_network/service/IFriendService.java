@@ -1,15 +1,18 @@
 package com.example.social_network.service;
 
 import com.example.social_network.model.Friend;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.example.social_network.model.Users;
 
 import java.util.List;
 
 public interface IFriendService {
     List<Friend> findAll();
+    List<Users> getListNotAddFriend(Long idUser1);
+    List<Friend> getListAddedFriend(Long idUser1);
+    List<Friend> getListWaitMakeFriend(Long idUser1);
+    List<Friend> getListFriend(Long idUser1,Long idUser2);
+    void save(Long idUser1, Long idUser2);
     void save(Friend friend);
     void delete(Long id);
     Friend findById(Long id);
-//    List<Friend> findAll();
-List<Friend> getListFriendRequest(  Long id);
 }
