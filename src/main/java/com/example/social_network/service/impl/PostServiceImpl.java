@@ -1,6 +1,7 @@
 package com.example.social_network.service.impl;
 
 import com.example.social_network.dto.post_img.PostImgdto;
+import com.example.social_network.model.Image;
 import com.example.social_network.model.Post;
 import com.example.social_network.ropository.PostRepo;
 import com.example.social_network.security.userprincal.UserDetailService;
@@ -42,9 +43,14 @@ public class PostServiceImpl implements IPostService {
     }
 
     @Override
-    public Post findById(Long id) {
-        return postRepo.findById(id).get();
+    public PostImgdto findById(Long id) {
+        Post post = postRepo.findById(id).get();
+        PostImgdto postDto = new PostImgdto(post.getId(), post.getContent(),post.getStatus(), post.getDate_Post(), post.getCount_Like(), post.getUsers()
+                , imageServiceImpl.findListImgByPostId(post.getId()));
+//                    , commentService.findListCommentByIdPost(post.getId()));
+       return postDto;
     }
+
 
 
 
@@ -66,6 +72,11 @@ public class PostServiceImpl implements IPostService {
             allPostDtos.add(postDto);
         }
         return allPostDtos;
+    }
+
+    @Override
+    public Post findPostByPost_dto(Long id) {
+        return postRepo.findById(id).get();
     }
 
 //    public List<Post> findPostByUserId(Long id) {
