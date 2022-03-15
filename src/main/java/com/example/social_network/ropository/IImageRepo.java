@@ -1,4 +1,4 @@
-package com.example.social_network.ropository.ImageRepository;
+package com.example.social_network.ropository;
 
 import com.example.social_network.model.Image;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,7 +1,7 @@
 package com.example.social_network.service.impl;
 
 import com.example.social_network.model.Image;
-import com.example.social_network.ropository.ImageRepository.IImageRepo;
+import com.example.social_network.ropository.IImageRepo;
 import com.example.social_network.service.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
