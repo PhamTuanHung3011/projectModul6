@@ -21,8 +21,8 @@ public class Friend {
     Users
             // from :
             User1 ,
-            // to :
-            User2;
+    // to :
+    User2;
 
     public Friend(boolean status, LocalDateTime since, Users user1, Users user2) {
         this.status = status;

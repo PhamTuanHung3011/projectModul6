@@ -1,7 +1,7 @@
 package com.example.social_network.service.impl;
 
+import com.example.social_network.dto.post_img.PostImgdto;
 import com.example.social_network.model.Post;
-import com.example.social_network.model.Users;
 import com.example.social_network.ropository.PostRepo;
 import com.example.social_network.security.userprincal.UserDetailService;
 import com.example.social_network.service.IPostService;
@@ -9,6 +9,7 @@ import com.example.social_network.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +19,13 @@ public class PostServiceImpl implements IPostService {
     @Autowired
     UserDetailService userDetailService;
 
+    @Autowired
+    ImageServiceImpl imageServiceImpl;
+
+    @Autowired
+    CommentServiceImpl commentService;
+
+
     @Override
     public List<Post> findAll() {
         return postRepo.findAll();
@@ -25,7 +33,7 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     public Post save(Post post) {
-       return postRepo.save(post);
+        return postRepo.save(post);
     }
 
     @Override
@@ -38,9 +46,56 @@ public class PostServiceImpl implements IPostService {
         return postRepo.findById(id).get();
     }
 
+
+
+//    @Override
+//    public Post findById(Long id) {
+//        return postRepo.findById(id).get();
+//    }
+
     @Override
-    public List<Post> findByTimePost() {
-        return postRepo.findPostToTime();
+    public List<PostImgdto> findByTimePost() {
+
+        List<Post> posts = postRepo.findPostToTime();
+        List<PostImgdto> allPostDtos = new ArrayList<>();
+
+        for (Post post : posts) {
+            PostImgdto postDto = new PostImgdto(post.getId(), post.getContent(),post.getStatus(), post.getDate_Post(), post.getCount_Like(), post.getUsers()
+                    , imageServiceImpl.findListImgByPostId(post.getId()));
+//                    , commentService.findListCommentByIdPost(post.getId()));
+            allPostDtos.add(postDto);
+        }
+        return allPostDtos;
     }
+
+//    public List<Post> findPostByUserId(Long id) {
+//        List<Image> listImgByPostId = new ArrayList<>();
+//        long idPost;
+//        List<Post> listPostByUserId = postRepo.findPostByUserId(id);
+//
+//
+//        for (int i = 0; i < listPostByUserId.size(); i++) {
+//            idPost = listPostByUserId.get(i).getId();
+//            listImgByPostId = imageServiceImpl.findListImgByPostId(idPost);
+//            for (int j = 0; j < listImgByPostId.size(); j++) {
+//                if (listImgByPostId.get(j).getPost().getId() == idPost) {
+//                    listImgByPostId.add(listImgByPostId.get(j));
+//                }
+//            }
+//        }
+//        return null;
+//    }
+
+    public List<PostImgdto> findPostByUserCurrentId(Long id) {
+        List<Post> posts = postRepo.findPostByUserId(id);
+        List<PostImgdto> postDtos = new ArrayList<>();
+
+        for (Post post : posts) {
+            PostImgdto postDto = new PostImgdto(post.getId(), post.getContent(),post.getStatus(), post.getDate_Post(), post.getCount_Like(), post.getUsers(),imageServiceImpl.findListImgByPostId(post.getId()));
+            postDtos.add(postDto);
+        }
+        return postDtos;
+    }
+
 
 }

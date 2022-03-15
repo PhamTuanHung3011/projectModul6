@@ -9,4 +9,6 @@ public interface ICommentService {
     void save(Comment comment);
     void delete(Long id);
     Comment findById(Long id);
+    List<Comment> findListCommentByIdPost(Long id);
+
 }
