@@ -15,14 +15,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
-
-
-
-    private enum status{
-        EVERYONE,
-        ONLYME,
-        FRIENDS
-    }
+    private String status;
     private LocalDateTime date_Post;
     private int count_Like;
 
@@ -32,9 +25,10 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long id, String content, LocalDateTime date_Post, int count_Like, Users users) {
+    public Post(Long id, String content, String status, LocalDateTime date_Post, int count_Like, Users users) {
         this.id = id;
         this.content = content;
+        this.status = status;
         this.date_Post = date_Post;
         this.count_Like = count_Like;
         this.users = users;
