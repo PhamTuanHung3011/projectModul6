@@ -11,8 +11,8 @@ import java.util.List;
 public interface FriendRepo extends JpaRepository<Friend, Long> {
     @Query(value = "select f from Friend f where f.id_user2 = :id and f.status = 1")
      List<Friend> getListFriendRequest(@Param("id") Long id);
-//    @Query(value = "select u from Users  u join Friend f on u.id = f.id_user1 ")
-    @Query(value = "select Users.name,Users.avatar,Users.address from Users join Friend on Users.id = Users.id where (Friend.id_user1 = Users.id and Friend.id_user2 = Users.id)")
-    List<Friend> getAllMutualFriend();
+////    @Query(value = "select u from Users  u join Friend f on u.id = f.id_user1 ")
+//    @Query(value = "select Users.name,Users.avatar,Users.address from Users join Friend on Users.id = Users.id where (Friend.id_user1 = Users.id and Friend.id_user2 = Users.id)")
+//    List<Friend> getAllMutualFriend();
 
 }
