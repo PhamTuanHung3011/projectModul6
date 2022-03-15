@@ -26,12 +26,9 @@ public class NotificationImpl implements INotificationService {
     @Override
     public void createNotifSender(Notification notification,Long idUser1,Long idUser2) {
         String nameSender = "";
-        String nameReceive = "";
         for (Users u: userService.getAll()) {
             if (u.getId() == idUser1){
                 nameSender = u.getName();
-            }if (u.getId() == idUser2){
-                nameReceive = u.getName();
             }
         }
         notification = new Notification(LocalDateTime.now(),"Bạn có lời mời kết bạn từ " + nameSender, userService.findById(idUser1), userService.findById(idUser2));
