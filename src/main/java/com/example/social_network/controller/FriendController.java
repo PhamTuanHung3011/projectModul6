@@ -90,7 +90,7 @@ public class FriendController {
     // xem danh sách các bạn bè chung
     @GetMapping("/listMutualFriends/{idUser1}/{idUser2}")
     public ResponseEntity<List<Friend>> listMutualFriends(@PathVariable Long idUser1,@PathVariable Long idUser2){
-        friendService.getListFriend(idUser1,idUser2);
+        friendService.listMutualFriend(idUser1,idUser2);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

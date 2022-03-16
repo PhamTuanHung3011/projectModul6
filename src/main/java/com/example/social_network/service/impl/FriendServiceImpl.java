@@ -72,6 +72,11 @@ public class FriendServiceImpl implements IFriendService {
     }
 
     @Override
+    public List<Users> listMutualFriend(Long idUser1, Long idUser2) {
+        return friendRepo.listMutualFriend(idUser1, idUser2);
+    }
+
+    @Override
     public void save(Long idUser1, Long idUser2) {
         Friend friend = new Friend(false, LocalDateTime.now(),userService.findUserById(idUser1),userService.findUserById(idUser2));
         friendRepo.save(friend);

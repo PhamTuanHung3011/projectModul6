@@ -1,2 +1,5 @@
-package com.example.social_network.service;public interface ILikeService {
+package com.example.social_network.service;
+
+public interface ILikeService{
+
 }

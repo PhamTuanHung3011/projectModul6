@@ -11,6 +11,7 @@ public interface IFriendService {
     List<Friend> getListAddedFriend(Long idUser1);
     List<Friend> getListWaitMakeFriend(Long idUser1);
     List<Friend> getListFriend(Long idUser1,Long idUser2);
+    List<Users>  listMutualFriend(Long idUser1, Long idUser2);
     void save(Long idUser1, Long idUser2);
     void save(Friend friend);
     void delete(Long id);
