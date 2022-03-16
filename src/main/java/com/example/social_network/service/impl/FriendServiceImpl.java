@@ -73,7 +73,9 @@ public class FriendServiceImpl implements IFriendService {
         friendRepo.save(friend);
     }
      @Override
-    public void save(Friend friend) {
+    public void setFriend(Long idFriend) {
+        Friend friend = friendRepo.findById(idFriend).get();
+        friend.setStatus(true);
         friendRepo.save(friend);
     }
 

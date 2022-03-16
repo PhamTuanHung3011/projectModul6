@@ -79,18 +79,16 @@ public class FriendController {
     @GetMapping("/waitMakeFriend/{idUser1}/{idUser2}")
     public ResponseEntity<Friend> waitMakeFriend(@PathVariable Long idUser1 ,@PathVariable Long idUser2){
         friendService.save(idUser1,idUser2);
-        notificationService.createNotifReceive(idUser1,idUser2);
+        notificationService.createNotifSender(idUser1,idUser2);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // đồng ý kb
     @PutMapping("/agreeMakeFriend/{idFriend}/{idNotif}")
-    public ResponseEntity<Friend> agreeMakeFriend(@PathVariable Long idFriend,@PathVariable Long idNotif, @RequestBody Friend friend) {
-        friend.setId(idFriend);
-        friend.setStatus(true);
-        friendService.save(friend);
-        notificationService.deleteNotification(idNotif);
-        return new ResponseEntity<>(friend, HttpStatus.OK);
+    public ResponseEntity<Friend> agreeMakeFriend(@PathVariable Long idFriend,@PathVariable Long idNotif) {
+        friendService.setFriend(idFriend);
+        notificationService.notifReceive(idNotif);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // xem danh sách các bạn bè chung
