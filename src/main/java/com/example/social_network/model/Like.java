@@ -9,16 +9,14 @@ import javax.persistence.*;
 public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
-    Users users;
+    private Users user;
 
     @ManyToOne
-    Post post;
+    private Comment comment;
 
     @ManyToOne
-    Comment comment;
-
-
+    private Post post;
 }

@@ -35,5 +35,6 @@ public class PostImgdto {
         this.count_Like = count_Like;
         this.users = users;
         this.listImage = listImage;
+
     }
 }

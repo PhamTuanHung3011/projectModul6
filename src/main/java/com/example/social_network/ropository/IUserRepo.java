@@ -16,8 +16,10 @@ public interface IUserRepo extends JpaRepository<Users, Long> {
     Boolean existsByUsername(String username);// kiem tra co ton tai hay ko
     Boolean existsByEmail(String email);// kiem tra email
 
-//    @Query(nativeQuery = true, value = "select * from users where users.username like '%admin2%'")
-    List<Users> findUserByUsername(String username);
+    List<Users> findAll();
+
+    @Query(nativeQuery = true, value = "select * from users where name like concat ('%',:name,'%')")
+    List<Users> findUserByUsername(@Param("name") String name);
 
     // danh sách bạn bè chung
     @Query(nativeQuery = true,value = "select users.* from users join (select bb1.id from (select friend.user2_id as id from friend where friend.user1_id =:idUser1 and friend.status = 1 union select friend.user1_id as id from friend where friend.user2_id =:idUser1 and friend.status = 1) as bb1 join (select friend.user2_id as id from friend where friend.user1_id =:idUser2 and friend.status = 1 union select friend.user1_id as id from friend where friend.user2_id =:idUser2 and friend.status = 1) as bb2 on bb1.id = bb2.id) as bbc on users.id = bbc.id")

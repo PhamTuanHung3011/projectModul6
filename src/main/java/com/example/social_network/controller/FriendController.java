@@ -25,6 +25,10 @@ public class FriendController {
     @Autowired
     INotificationService notificationService;
 
+    @GetMapping("/search_friend/{name}")
+    public ResponseEntity<List<Users>> searchUser(@PathVariable String name){
+        return new ResponseEntity<>(userService.findUserByUsername(name),HttpStatus.OK);
+    }
 //    @GetMapping
 //    public ResponseEntity<List<Friend>> products() {
 //        return new ResponseEntity<>(friendService.findAll(), HttpStatus.OK);
@@ -71,15 +75,14 @@ public class FriendController {
 
     // xem danh sách bạn bè đã kb
     @GetMapping("/addedFriend/{idUser}")
-    public ResponseEntity<List<Users>> addedFriend(@PathVariable Long idUser){
-        return new ResponseEntity<>(friendService.getListAddedFriend(idUser),HttpStatus.OK);
+    public ResponseEntity<List<Friend>> addedFriend(@PathVariable Long idUser){
+        return new ResponseEntity<>(friendService.getListWaitMakeFriend(idUser),HttpStatus.OK);
     }
 
     // gửi yêu cầu kb
     @GetMapping("/waitMakeFriend/{idUser1}/{idUser2}")
     public ResponseEntity<Friend> waitMakeFriend(@PathVariable Long idUser1 ,@PathVariable Long idUser2){
         friendService.save(idUser1,idUser2);
-        notificationService.createNotifSender(idUser1,idUser2);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -93,9 +96,7 @@ public class FriendController {
 
     // xem danh sách các bạn bè chung
     @GetMapping("/listMutualFriends/{idUser1}/{idUser2}")
-
-    public ResponseEntity<List<Friend>> listMutualFriends(@PathVariable Long idUser1,@PathVariable Long idUser2){
-        friendService.listMutualFriend(idUser1,idUser2);
-        return new ResponseEntity<>(HttpStatus.OK);
-
-}}
+    public ResponseEntity<List<Users>> listMutualFriends(@PathVariable Long idUser1,@PathVariable Long idUser2){
+        return new ResponseEntity<>(friendService.listMutualFriend(idUser1,idUser2),HttpStatus.OK);
+    }
+}
