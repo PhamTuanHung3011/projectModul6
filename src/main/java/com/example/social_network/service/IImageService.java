@@ -10,5 +10,5 @@ public interface IImageService {
     void deleteImg(Long id);
     Image findImg(Long id);
 
-    List<Image> findListImgByPostId(Long id);
+    Image findListImgByPostId(Long id);
 }

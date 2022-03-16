@@ -13,6 +13,6 @@ public interface IImageRepo extends JpaRepository<Image, Long> {
 
 
     @Query(nativeQuery = true, value = "select * from image where image.post_id = :id")
-    List<Image> findListImgByPostId(@Param("id") Long id);
+    Image findListImgByPostId(@Param("id") Long id);
 
 }
