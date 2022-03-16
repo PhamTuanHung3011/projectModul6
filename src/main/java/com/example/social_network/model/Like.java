@@ -6,19 +6,17 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Like_Post {
+public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //thay vì đếm count_like, thì mình để stt là 0 hoặc 1 để đánh dấu like hay chưa.
-    private boolean status;
-    private int count_Like;
-
+    @ManyToOne
+    private Users user;
 
     @ManyToOne
-    Users users;
+    private Comment comment;
 
     @ManyToOne
-    Post post;
+    private Post post;
 }

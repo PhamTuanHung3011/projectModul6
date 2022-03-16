@@ -34,15 +34,19 @@ public class NotificationImpl implements INotificationService {
         Notification notification = new Notification(LocalDateTime.now(),"Bạn có lời mời kết bạn từ " + nameSender, userService.findById(idUser1), userService.findById(idUser2));
         notificationRepo.save(notification);
     }
+
+
   @Override
-    public void createNotifReceive(Long idUser1,Long idUser2) {
+    public void notifReceive(Long idNotif) {
         String nameReceive = "";
-        for (Users u: userService.getAll()) {
-            if (u.getId() == idUser2){
-                nameReceive = u.getName();
-            }
-        }
-        Notification notification = new Notification(LocalDateTime.now(),nameReceive+ " đã chấp nhận lời mời kết bạn của bạn " , userService.findById(idUser1), userService.findById(idUser2));
+        Notification notification = new Notification();
+      for (Notification no:listNotification()) {
+          if (no.getId() == idNotif){
+              nameReceive = no.getTo().getName();
+              notification.setSince(LocalDateTime.now());
+              notification.setContent(nameReceive+ " đã chấp nhận lời mời kết bạn của bạn " );
+          }
+      }
         notificationRepo.save(notification);
     }
 
