@@ -43,7 +43,7 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     public Post findById(Long id) {
-        return null;
+        return postRepo.findById(id).get();
     }
 
 
@@ -60,7 +60,7 @@ public class PostServiceImpl implements IPostService {
         List<PostImgdto> allPostDtos = new ArrayList<>();
 
         for (Post post : posts) {
-            PostImgdto postDto = new PostImgdto(post.getId(), post.getContent(), post.getDate_Post(), post.getCount_Like(), post.getUsers()
+            PostImgdto postDto = new PostImgdto(post.getId(), post.getContent(),post.getStatus(), post.getDate_Post(), post.getCount_Like(), post.getUsers()
                     , imageServiceImpl.findListImgByPostId(post.getId()));
 //                    , commentService.findListCommentByIdPost(post.getId()));
             allPostDtos.add(postDto);
@@ -91,16 +91,10 @@ public class PostServiceImpl implements IPostService {
         List<PostImgdto> postDtos = new ArrayList<>();
 
         for (Post post : posts) {
-            PostImgdto postDto = new PostImgdto(post.getId(), post.getContent(), post.getDate_Post(), post.getCount_Like(), post.getUsers(),imageServiceImpl.findListImgByPostId(post.getId()));
+            PostImgdto postDto = new PostImgdto(post.getId(), post.getContent(),post.getStatus(), post.getDate_Post(), post.getCount_Like(), post.getUsers(),imageServiceImpl.findListImgByPostId(post.getId()));
             postDtos.add(postDto);
         }
         return postDtos;
-    }
-
-
-    public PostImgdto editPostDto(PostImgdto postDto) {
-         Post post = new Post(postDto.getId(), postDto.getContent(), postDto.getDate_Post(), postDto.getCount_Like(), postDto.getUsers());
-         return null;
     }
 
 

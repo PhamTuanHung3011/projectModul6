@@ -3,6 +3,7 @@ package com.example.social_network.service.impl;
 import com.example.social_network.model.Friend;
 import com.example.social_network.model.Users;
 import com.example.social_network.ropository.FriendRepo;
+import com.example.social_network.ropository.IUserRepo;
 import com.example.social_network.service.IFriendService;
 import com.example.social_network.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class FriendServiceImpl implements IFriendService {
     @Autowired
     FriendRepo friendRepo;
 
+ @Autowired
+ IUserRepo userRepo;
+
     @Autowired
     IUserService userService;
 
@@ -26,14 +30,14 @@ public class FriendServiceImpl implements IFriendService {
     }
 
  @Override
-    public List<Friend> getListAddedFriend(Long idUser){
-        return friendRepo.findFriendByUser1AndUser2(idUser);
+    public List<Users> getListAddedFriend(Long idUser){
+        return userRepo.listAddedFriend(idUser);
     }
 
  @Override
     public List<Users> getListNotAddFriend(Long idUser1){
         List<Users> userList = userService.getAll();
-        List<Friend> getList = friendRepo.findFriendById(idUser1);
+        List<Friend> getList = friendRepo.listNotAddFriend(idUser1);
         List<Long> getId = new ArrayList<>();
         getId.add(idUser1);
      for (int i = 0; i < getList.size(); i++) {
@@ -55,21 +59,14 @@ public class FriendServiceImpl implements IFriendService {
 
  @Override
     public List<Friend> getListWaitMakeFriend(Long idUser){
-        return friendRepo.findFriendByUser1(idUser);
+        return userRepo.listWaitMakeFriend(idUser);
     }
 
  @Override
-    public List<Friend> getListFriend(Long idUser,Long idUser2){
-        List<Friend> getListFriend1 = friendRepo.findFriendByUser1AndUser2(idUser);
-        List<Friend> getListFriend2 = friendRepo.findFriendByUser1AndUser2(idUser2);
-        List<Friend> friendList = new ArrayList<>();
-//     for (Friend friend1:getListFriend1) {
-//         for (Friend f:getListFriend2) {
-//             if (friend1.)
-//         }
-//     }
-        return friendList;
+    public List<Users> listMutualFriend(Long idUser1,Long idUser2){
+        return userRepo.listMutualFriend(idUser1, idUser2);
     }
+
 
     @Override
     public void save(Long idUser1, Long idUser2) {
@@ -77,7 +74,9 @@ public class FriendServiceImpl implements IFriendService {
         friendRepo.save(friend);
     }
      @Override
-    public void save(Friend friend) {
+    public void setFriend(Long idFriend) {
+        Friend friend = friendRepo.findById(idFriend).get();
+        friend.setStatus(true);
         friendRepo.save(friend);
     }
 
