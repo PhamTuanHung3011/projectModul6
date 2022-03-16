@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface INotificationService {
     List<Notification> listNotification();
-    void createNotifSender(Notification notification,Long idUser1,Long idUser2);
-    void createNotifReceive(Notification notification,Long idUser1,Long idUser2);
+    void createNotifSender(Long idUser1,Long idUser2);
+    void createNotifReceive(Long idUser1,Long idUser2);
     void deleteNotification(Long id);
 
 }

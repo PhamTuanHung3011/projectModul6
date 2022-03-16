@@ -3,6 +3,7 @@ package com.example.social_network.service.impl;
 import com.example.social_network.model.Friend;
 import com.example.social_network.model.Users;
 import com.example.social_network.ropository.FriendRepo;
+import com.example.social_network.ropository.IUserRepo;
 import com.example.social_network.service.IFriendService;
 import com.example.social_network.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class FriendServiceImpl implements IFriendService {
     @Autowired
     FriendRepo friendRepo;
 
+ @Autowired
+ IUserRepo userRepo;
+
     @Autowired
     IUserService userService;
 
@@ -26,8 +30,8 @@ public class FriendServiceImpl implements IFriendService {
     }
 
  @Override
-    public List<Friend> getListAddedFriend(Long idUser){
-        return friendRepo.listAddedFriend(idUser);
+    public List<Users> getListAddedFriend(Long idUser){
+        return userRepo.listAddedFriend(idUser);
     }
 
  @Override
@@ -55,12 +59,12 @@ public class FriendServiceImpl implements IFriendService {
 
  @Override
     public List<Friend> getListWaitMakeFriend(Long idUser){
-        return friendRepo.listWaitMakeFriend(idUser);
+        return userRepo.listWaitMakeFriend(idUser);
     }
 
  @Override
     public List<Users> listMutualFriend(Long idUser1,Long idUser2){
-        return friendRepo.listMutualFriend(idUser1, idUser2);
+        return userRepo.listMutualFriend(idUser1, idUser2);
     }
 
     @Override

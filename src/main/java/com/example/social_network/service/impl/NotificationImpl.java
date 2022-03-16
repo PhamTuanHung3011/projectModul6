@@ -24,25 +24,25 @@ public class NotificationImpl implements INotificationService {
     }
 
     @Override
-    public void createNotifSender(Notification notification,Long idUser1,Long idUser2) {
+    public void createNotifSender(Long idUser1,Long idUser2) {
         String nameSender = "";
         for (Users u: userService.getAll()) {
             if (u.getId() == idUser1){
                 nameSender = u.getName();
             }
         }
-        notification = new Notification(LocalDateTime.now(),"Bạn có lời mời kết bạn từ " + nameSender, userService.findById(idUser1), userService.findById(idUser2));
+        Notification notification = new Notification(LocalDateTime.now(),"Bạn có lời mời kết bạn từ " + nameSender, userService.findById(idUser1), userService.findById(idUser2));
         notificationRepo.save(notification);
     }
   @Override
-    public void createNotifReceive(Notification notification,Long idUser1,Long idUser2) {
+    public void createNotifReceive(Long idUser1,Long idUser2) {
         String nameReceive = "";
         for (Users u: userService.getAll()) {
             if (u.getId() == idUser2){
                 nameReceive = u.getName();
             }
         }
-        notification = new Notification(LocalDateTime.now(),nameReceive+ " đã chấp nhận lời mời kết bạn của bạn " , userService.findById(idUser1), userService.findById(idUser2));
+        Notification notification = new Notification(LocalDateTime.now(),nameReceive+ " đã chấp nhận lời mời kết bạn của bạn " , userService.findById(idUser1), userService.findById(idUser2));
         notificationRepo.save(notification);
     }
 
