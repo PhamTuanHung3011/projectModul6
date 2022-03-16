@@ -88,14 +88,12 @@ public class PostController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Post> edit(@PathVariable Long id, @RequestBody PostImgdto post_dto) {
-        Post post = postService.findById(post_dto.getId());
-        Users user = iUserService.findById(post_dto.getUsers().getId());
+        Post post = postService.findById(id);
         post.setContent(post_dto.getContent());
         post.setCount_Like(post_dto.getCount_Like());
-        post.setUsers(user);
-
         CheckDate checkDate = new CheckDate();
         post.setDate_Post(checkDate.getTimePost());
+        post.setUsers(post_dto.getUsers());
 
 //        List<Image> listimageEdit = new ArrayList<>();
 //         for (int i = 0; i < postService.findAll().size(); i++) {
