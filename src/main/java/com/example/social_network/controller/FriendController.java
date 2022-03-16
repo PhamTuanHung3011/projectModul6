@@ -25,6 +25,10 @@ public class FriendController {
     @Autowired
     INotificationService notificationService;
 
+    @GetMapping("/search_friend/{name}")
+    public ResponseEntity<List<Users>> searchUser(@PathVariable String name){
+        return new ResponseEntity<>(userService.findUserByUsername(name),HttpStatus.OK);
+    }
 //    @GetMapping
 //    public ResponseEntity<List<Friend>> products() {
 //        return new ResponseEntity<>(friendService.findAll(), HttpStatus.OK);

@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/user")
@@ -16,7 +18,10 @@ public class UserController {
     IUserServiceImpl iUserService;
 
 
-
+    @GetMapping("/showUserDetails/{id}")
+    public ResponseEntity<Users> showDetails(@PathVariable Long id){
+        return new ResponseEntity<>(iUserService.findById(id),HttpStatus.OK);
+    }
 
     @PutMapping("/editUser")
     public ResponseEntity<Users> editUser(@RequestBody Users users){
@@ -29,5 +34,10 @@ public class UserController {
         return new ResponseEntity<>(iUserService.findUserById(id) , HttpStatus.OK);
     }
 
+    @GetMapping("/findAll")
+    public ResponseEntity<List<Users>> getAll(){
+        List<Users> usersList = iUserService.getAll();
+        return new ResponseEntity<>(usersList,HttpStatus.OK);
+    }
 
 }
