@@ -15,13 +15,13 @@ public class JwtProvider {
 
     private static final Logger logger = LoggerFactory.getLogger( JwtProvider.class);
     private String jwtSecret = "tu.pham";
-    private int jwtExpiration = 86400;
+    private int jwtExpiration = 864000000;
 
     public String createToken(Authentication authentication){
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         return Jwts.builder().setSubject(userPrinciple.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date( new Date().getTime()+jwtExpiration*1000))
+                .setExpiration(new Date( new Date().getTime()+jwtExpiration*10000))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
