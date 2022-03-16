@@ -104,7 +104,7 @@ public class PostController {
 //                }
 //            }
 //        }
-//        List<Image> imageListEdit = imageService.findListImgByPostId(post_dto.getId());
+        List<Image> imageListEdit = imageService.findListImgByPostId(post_dto.getId());
 
 
 //        post_dto.getListImage();
