@@ -18,6 +18,7 @@ public interface IUserRepo extends JpaRepository<Users, Long> {
 
     List<Users> findAll();
 
+
     @Query(nativeQuery = true, value = "select * from users where name like concat ('%',:name,'%')")
     List<Users> findUserByUsername(@Param("name") String name);
 
