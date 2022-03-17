@@ -48,11 +48,8 @@ public class Users {
 
     private String address;
 
-    private enum gender{
-        MALE,
-        FEMALE,
-        ELSE
-    }
+    private String gender;
+
     @JsonIgnore
     @NotBlank
     @Size(min = 6, max = 100)

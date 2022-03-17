@@ -3,7 +3,8 @@ package com.example.social_network.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Data
 @Entity
@@ -12,7 +13,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
-    private Date date_Comment;
+    private LocalDateTime time;
 
     @ManyToOne
     Users users;
