@@ -9,7 +9,8 @@ public interface IPostService {
     List<Post> findAll();
     Post save(Post post);
     void delete(Long id);
-    Post findById(Long id);
+    PostImgdto findById(Long id);
     List<PostImgdto> findByTimePost();
+    Post findPostByPost_dto(Long id);
 
 }
