@@ -62,14 +62,21 @@ public class FriendController {
 
     // xem danh sách bạn bè chờ kb
     @GetMapping("/listWaitMakeFriend/{idUser}")
-    public ResponseEntity<List<Friend>> listWaitMakeFriend(@PathVariable Long idUser) {
+    public ResponseEntity<List<Users>> listWaitMakeFriend(@PathVariable Long idUser) {
         return new ResponseEntity<>(friendService.getListWaitMakeFriend(idUser),HttpStatus.OK);
     }
 
-    // hủy yêu cầu kb và hủy kb
-    @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
-        friendService.delete(id);
+    // hủy  kb
+    @DeleteMapping("/deleteFriend/{idUser}/{idFriend}")
+    public ResponseEntity deleteFriend(@PathVariable Long idUser,@PathVariable Long idFriend) {
+        friendService.deleteAddedFriend(idUser, idFriend);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    // hủy yêu cầu kb
+    @DeleteMapping("/deleteWaitFriend/{idUser}/{idFriend}")
+    public ResponseEntity deleteWaitFriend(@PathVariable Long idUser,@PathVariable Long idFriend) {
+        friendService.deleteWaitAddFriend(idUser, idFriend);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -91,7 +98,7 @@ public class FriendController {
     @PutMapping("/agreeMakeFriend/{idFriend}/{idNotif}")
     public ResponseEntity<Friend> agreeMakeFriend(@PathVariable Long idFriend,@PathVariable Long idNotif) {
         friendService.setFriend(idFriend);
-        notificationService.notifReceive(idNotif);
+        notificationService.deleteNotification(idNotif);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
