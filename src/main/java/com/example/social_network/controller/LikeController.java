@@ -41,15 +41,14 @@ public class LikeController {
 
     // xem số lượt like bài post
     @GetMapping("/countLikePost/{idPost}")
-    public ResponseEntity<Integer> countLikePost(@PathVariable Long idPost){
+    public ResponseEntity<Long> countLikePost(@PathVariable Long idPost){
         return new ResponseEntity<>(likeService.countLikePost(idPost),HttpStatus.OK);
     }
 
     // xem số lượt like comment
-    @GetMapping("/countLikePost/{idComment}")
-    public ResponseEntity<Integer> countLikeComment(@PathVariable Long idComment){
-        likeService.countLikeComment(idComment);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/countLikeComment/{idComment}")
+    public ResponseEntity<Long> countLikeComment(@PathVariable Long idComment){
+        return new ResponseEntity<>(likeService.countLikeComment(idComment),HttpStatus.OK);
     }
 
     // xem danh sách lượt like bài post
