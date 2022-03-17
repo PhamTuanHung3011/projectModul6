@@ -3,6 +3,7 @@ package com.example.social_network.controller;
 import com.example.social_network.model.Friend;
 import com.example.social_network.model.Users;
 import com.example.social_network.service.IFriendService;
+import com.example.social_network.service.INotificationService;
 import com.example.social_network.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,13 @@ public class FriendController {
     @Autowired
     IUserService userService;
 
+    @Autowired
+    INotificationService notificationService;
+
+    @GetMapping("/search_friend/{name}")
+    public ResponseEntity<List<Users>> searchUser(@PathVariable String name){
+        return new ResponseEntity<>(userService.findUserByUsername(name),HttpStatus.OK);
+    }
 //    @GetMapping
 //    public ResponseEntity<List<Friend>> products() {
 //        return new ResponseEntity<>(friendService.findAll(), HttpStatus.OK);
@@ -67,30 +75,29 @@ public class FriendController {
 
     // xem danh sách bạn bè đã kb
     @GetMapping("/addedFriend/{idUser}")
-    public ResponseEntity<List<Friend>> addedFriend(@PathVariable Long idUser){
-        return new ResponseEntity<>(friendService.getListWaitMakeFriend(idUser),HttpStatus.OK);
+    public ResponseEntity<List<Users>> addedFriend(@PathVariable Long idUser){
+        return new ResponseEntity<>(friendService.getListAddedFriend(idUser),HttpStatus.OK);
     }
 
     // gửi yêu cầu kb
     @GetMapping("/waitMakeFriend/{idUser1}/{idUser2}")
     public ResponseEntity<Friend> waitMakeFriend(@PathVariable Long idUser1 ,@PathVariable Long idUser2){
         friendService.save(idUser1,idUser2);
+        notificationService.createNotifSender(idUser1,idUser2);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // đồng ý kb
-    @PutMapping("/agreeMakeFriend/{id}")
-    public ResponseEntity<Friend> agreeMakeFriend(@PathVariable Long id, @RequestBody Friend friend) {
-        friend.setId(id);
-        friend.setStatus(true);
-        friendService.save(friend);
-        return new ResponseEntity<>(friend, HttpStatus.OK);
+    @PutMapping("/agreeMakeFriend/{idFriend}/{idNotif}")
+    public ResponseEntity<Friend> agreeMakeFriend(@PathVariable Long idFriend,@PathVariable Long idNotif) {
+        friendService.setFriend(idFriend);
+        notificationService.notifReceive(idNotif);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // xem danh sách các bạn bè chung
     @GetMapping("/listMutualFriends/{idUser1}/{idUser2}")
-    public ResponseEntity<List<Friend>> listMutualFriends(@PathVariable Long idUser1,@PathVariable Long idUser2){
-        friendService.getListFriend(idUser1,idUser2);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<List<Users>> listMutualFriends(@PathVariable Long idUser1,@PathVariable Long idUser2){
+        return new ResponseEntity<>(friendService.listMutualFriend(idUser1,idUser2),HttpStatus.OK);
     }
 }

@@ -76,8 +76,8 @@ public class PostController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> findById(@PathVariable Long id) {
-        return new ResponseEntity<>(postService.findById(id) , HttpStatus.OK);
+    public ResponseEntity<PostImgdto> findById(@PathVariable Long id) {
+        return new ResponseEntity<PostImgdto>(postService.findById(id) , HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -86,9 +86,9 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Post> edit(@PathVariable Long id, @RequestBody PostImgdto post_dto) {
-        Post post = postService.findById(id);
+    @PutMapping
+    public ResponseEntity<PostImgdto> edit(@RequestBody PostImgdto post_dto) {
+        Post post = postService.findPostByPost_dto(post_dto.getId());
         post.setContent(post_dto.getContent());
         post.setCount_Like(post_dto.getCount_Like());
         CheckDate checkDate = new CheckDate();
@@ -104,15 +104,14 @@ public class PostController {
 //                }
 //            }
 //        }
-//        List<Image> imageListEdit = imageService.findListImgByPostId(post_dto.getId());
+        List<Image> imageListEdit = imageService.findListImgByPostId(post_dto.getId());
 
 
 //        post_dto.getListImage();
 
         postService.save(post);
-        System.out.println("getCurrentUser");
-        System.out.println(userDetailService.getCurrentUser());
-        return new ResponseEntity<>(post,HttpStatus.OK);
+
+        return new ResponseEntity<PostImgdto>(HttpStatus.OK);
     }
 
 }

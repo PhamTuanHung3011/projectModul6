@@ -21,6 +21,11 @@ public class IUserServiceImpl implements IUserService {
     }
 
     @Override
+    public List<Users> findUserByUsername(String name) {
+        return iUserRepo.findUserByUsername(name);
+    }
+
+    @Override
     public Boolean existsByUsername(String username) {
         return iUserRepo.existsByUsername(username);
     }
