@@ -13,22 +13,10 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
-    private String status;
-    private LocalDateTime date_Post;
-    private int count_Like;
-
+    private boolean isPublic;
+    private String image;
+    private LocalDateTime time;
     @ManyToOne
-    Users users;
+    private Users users;
 
-    public Post() {
-    }
-
-    public Post(Long id, String content, String status, LocalDateTime date_Post, int count_Like, Users users) {
-        this.id = id;
-        this.content = content;
-        this.status = status;
-        this.date_Post = date_Post;
-        this.count_Like = count_Like;
-        this.users = users;
-    }
 }

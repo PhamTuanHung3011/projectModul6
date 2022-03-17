@@ -5,11 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+
 public interface LikeRepo extends JpaRepository<Likes,Long> {
     // đếm số like post
     @Query(nativeQuery = true,value = "select count(post_id) from likes where post_id =:idPost")
     Long numberLikesPost (@Param(value = "idPost")Long idPost);
 
+    @Query(nativeQuery = true, value = "SELECT count(id) FROM socialnetwork.likes where post_id = :id")
+    Long getLikeNumber(@Param(value = "id") Long id);
     // đếm số like comment
      @Query(nativeQuery = true,value = "select count(comment_id) from likes where comment_id =:idComment")
     Long numberLikesComment (@Param(value = "idComment")Long idComment);

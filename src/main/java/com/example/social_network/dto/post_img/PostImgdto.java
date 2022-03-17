@@ -1,5 +1,6 @@
 package com.example.social_network.dto.post_img;
 
+import com.example.social_network.model.Comment;
 import com.example.social_network.model.Image;
 import com.example.social_network.model.Post;
 import com.example.social_network.model.Users;
@@ -15,26 +16,22 @@ import java.util.List;
 public class PostImgdto {
     private Long id;
     private String content;
-    private String status;
-    private LocalDateTime date_Post;
-    private int count_Like;
+    private boolean isPublic;
+    private String image;
+    private LocalDateTime time;
+    private boolean status;
+    private Users users;
+    private List<Comment> comments;
 
-    Users users;
 
-    List<Image> listImage;
-
-    static public Post bulldPost(PostImgdto post){
-        return new Post(post.getId(), post.getContent(), post.getStatus(),post.getDate_Post(),post.getCount_Like(),post.getUsers());
-    }
-
-    public PostImgdto(Long id, String content, String status, LocalDateTime date_Post, int count_Like, Users users, List<Image> listImage) {
+    public PostImgdto(Long id, String content, boolean aPublic, String image, LocalDateTime time, boolean b, Users users) {
         this.id = id;
         this.content = content;
-        this.status = status;
-        this.date_Post = date_Post;
-        this.count_Like = count_Like;
+        this.isPublic = aPublic;
+        this.image = image;
+        this.time = time;
+        this.status = b;
         this.users = users;
-        this.listImage = listImage;
 
     }
 }
