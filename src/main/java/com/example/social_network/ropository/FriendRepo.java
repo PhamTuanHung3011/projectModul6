@@ -12,7 +12,4 @@ public interface FriendRepo extends JpaRepository<Friend, Long> {
     // danh sách bạn bè chưa kb
     @Query(nativeQuery = true, value = "select * from friend where (friend.user1_id =:User1 or friend.user2_id =:User1)  and friend.status in (0,1)")
     public List<Friend> listNotAddFriend(@Param(value = "User1") Long id1);
-
-
-
 }
