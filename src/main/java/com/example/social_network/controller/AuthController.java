@@ -96,7 +96,7 @@ public class AuthController {
         System.out.println(userPrinciple);
         Users users = iUserService.findByUsername(userPrinciple.getUsername()).get();
 //        trả kèm theo id;
-        return ResponseEntity.ok( new JwtResponse(userPrinciple.getId(), token, userPrinciple.getName(), userPrinciple.getAuthorities()));
-//        return ResponseEntity.ok( new JwtResponse(token, users));
+//        return ResponseEntity.ok( new JwtResponse(userPrinciple.getId(), token, userPrinciple.getName(), userPrinciple.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(token, users));
     }
 }

@@ -44,7 +44,7 @@ public class LikeServiceImpl implements ILikeService {
 
     @Override
     public Long countLikeComment(Long idComment) {
-        return likeRepo.numberLikesComment(idComment);
+        return likeRepo.numberLikesPost(idComment);
     }
 
     @Override
@@ -64,5 +64,28 @@ public class LikeServiceImpl implements ILikeService {
         likeRepo.deleteById(idLike);
     }
 
+    @Override
+    public List<Likes> findAll() {
+        return likeRepo.findAll();
+    }
 
+    @Override
+    public Likes save(Likes like) {
+        return likeRepo.save(like);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        likeRepo.deleteById(id);
+    }
+
+    @Override
+    public Likes findById(Long id) {
+        return likeRepo.findById(id).get();
+    }
+
+    @Override
+    public Long getLikeNumber(Long id) {
+        return likeRepo.getLikeNumber(id);
+    }
 }

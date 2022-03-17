@@ -51,6 +51,7 @@ public class UserDetailService implements UserDetailsService {
             //set cho no 1 cai ten user an danh Day la truong hop ma tuong tac qua dang nhap kieu FB hay GG
             user.get().setUsername("Anonymous");
         }
+
         return user.get();
     }
 }
