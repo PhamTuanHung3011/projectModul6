@@ -19,6 +19,11 @@ public class NotificationImpl implements INotificationService {
     IUserServiceImpl userService;
 
     @Override
+    public List<Notification> listNotification(Long idUser) {
+        return notificationRepo.getNotification(idUser);
+    }
+
+    @Override
     public List<Notification> listNotification() {
         return notificationRepo.findAll();
     }
