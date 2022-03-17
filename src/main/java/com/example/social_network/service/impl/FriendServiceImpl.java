@@ -58,7 +58,7 @@ public class FriendServiceImpl implements IFriendService {
     }
 
  @Override
-    public List<Friend> getListWaitMakeFriend(Long idUser){
+    public List<Users> getListWaitMakeFriend(Long idUser){
         return userRepo.listWaitMakeFriend(idUser);
     }
 
@@ -80,8 +80,13 @@ public class FriendServiceImpl implements IFriendService {
     }
 
     @Override
-    public void delete(Long id) {
-        friendRepo.deleteById(id);
+    public void deleteAddedFriend(Long idUser,Long idFriend) {
+        friendRepo.delete(friendRepo.findAddedFriendById(idUser,idFriend));
+    }
+
+    @Override
+    public void deleteWaitAddFriend(Long idUser,Long idFriend) {
+        friendRepo.delete(friendRepo.findWaitAddFriendById(idUser, idFriend));
     }
 
     @Override
