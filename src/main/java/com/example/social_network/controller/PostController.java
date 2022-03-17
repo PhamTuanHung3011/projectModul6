@@ -92,10 +92,17 @@ public class PostController {
 
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/findPost/{id}")
     public ResponseEntity<Post> findById(@PathVariable Long id) {
         iCommentService.findListCommentByIdPost(postService.findById(id).get().getId());
         return new ResponseEntity<>(postService.findById(id).get(), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> findPostById(@PathVariable Long id) {
+        Post post = postService.findById(id).get();
+        return new ResponseEntity<>(post, HttpStatus.OK);
 
     }
 
@@ -118,11 +125,15 @@ public class PostController {
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<Post> edit(@RequestBody Post post, @PathVariable Long id) {
-        post.setId(id);
+    public ResponseEntity<Post> edit(@RequestBody Post post,@PathVariable Long id) {
+        Post posts = postService.findById(id).get();
+        posts.setId(id);
+        posts.setContent(post.getContent());
+        posts.setUsers(post.getUsers());
+        posts.setImage(post.getImage());
         CheckDate checkDate = new CheckDate();
-        post.setTime(checkDate.getTimePost());
-        return new ResponseEntity<>(postService.save(post), HttpStatus.OK);
+        posts.setTime(checkDate.getTimePost());
+        return new ResponseEntity<>(postService.save(posts), HttpStatus.OK);
     }
 
     @GetMapping("/getLikeNumber")
