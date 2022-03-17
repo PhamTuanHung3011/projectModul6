@@ -59,7 +59,7 @@ public class FriendServiceImpl implements IFriendService {
     }
 
     @Override
-    public List<Friend> getListWaitMakeFriend(Long idUser) {
+    public List<Users> getListWaitMakeFriend(Long idUser) {
         return userRepo.listWaitMakeFriend(idUser);
     }
 
