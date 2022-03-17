@@ -59,13 +59,15 @@ public class PostController {
         List<Likes> likesList = iLikeServiceImpl.findAll();
 
         for (Post post : posts) {
-            PostImgdto postDto = new PostImgdto(post.getId(), post.getContent(), post.isPublic(), post.getImage(), post.getTime(), true, post.getUsers());
+            PostImgdto postDto = new PostImgdto(post);
+
             for (Likes like : likesList) {
                 if (Objects.equals(like.getUsers().getId(), user.getId()) && Objects.equals(like.getPost().getId(), post.getId())) {
                     postDto.setStatus(false);
                 }
             }
-            postDto.setComments(iCommentService.findListCommentByIdPost(post.getId()));
+
+            postDto.setComments(iCommentService.findListCommentByIdPost(postDto.getPost().getId()));
             postDtos.add(postDto);
         }
         return postDtos;
@@ -141,7 +143,7 @@ public class PostController {
         List<PostImgdto> postDtoList = findAll();
         List<Long> listLike = new ArrayList<>();
         for (PostImgdto postDto : postDtoList) {
-            listLike.add(iLikeServiceImpl.getLikeNumber(postDto.getId()));
+            listLike.add(iLikeServiceImpl.getLikeNumber(postDto.getPost().getId()));
         }
         return new ResponseEntity<>(listLike, HttpStatus.OK);
     }
@@ -150,7 +152,7 @@ public class PostController {
         List<PostImgdto> postList = findAll();
         List<List<Comment>> comments = new ArrayList<>();
         for (PostImgdto post : postList) {
-            comments.add(iCommentService.findListCommentByIdPost(post.getId()));
+            comments.add(iCommentService.findListCommentByIdPost(post.getPost().getId()));
         }
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
