@@ -9,6 +9,7 @@ import lombok.Data;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,8 +17,8 @@ import java.util.List;
 public class PostImgdto {
     private Post post;
     private boolean status;
-    private List<Comment> comments;
-    private List<Likes> likes;
+    private List<Comment> comments = new ArrayList<>();
+    private List<Likes> likes = new ArrayList<>();
 
     public PostImgdto(Post post) {
         this.post = post;

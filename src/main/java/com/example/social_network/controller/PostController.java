@@ -1,9 +1,11 @@
 package com.example.social_network.controller;
 
+import com.example.social_network.dto.post_img.PostDto;
 import com.example.social_network.dto.post_img.PostImgdto;
 import com.example.social_network.dto.respon.ResponMess;
 import com.example.social_network.model.*;
 import com.example.social_network.security.userprincal.UserDetailService;
+import com.example.social_network.service.ICommentService;
 import com.example.social_network.service.IImageService;
 import com.example.social_network.service.ILikeService;
 import com.example.social_network.service.impl.CommentServiceImpl;
@@ -34,6 +36,8 @@ public class PostController {
 
     @Autowired
     IImageService imageService;
+    @Autowired
+    ICommentService commentService;
 
     @Autowired
     IUserServiceImpl iUserService;
@@ -57,6 +61,7 @@ public class PostController {
         List<PostImgdto> postDtos = new ArrayList<>();
         Users user = userDetailService.getCurrentUser();
         List<Likes> likesList = iLikeServiceImpl.findAll();
+        List<Comment> comments = commentService.findAll();
 
         for (Post post : posts) {
             PostImgdto postDto = new PostImgdto(post);
@@ -64,6 +69,11 @@ public class PostController {
             for (Likes like : likesList) {
                 if (Objects.equals(like.getUsers().getId(), user.getId()) && Objects.equals(like.getPost().getId(), post.getId())) {
                     postDto.setStatus(false);
+                }
+            }
+            for (Comment c : comments) {
+                if (c.getPost().getId()== post.getId()){
+                    postDto.getComments().add(c);
                 }
             }
 
@@ -83,12 +93,19 @@ public class PostController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<Post> create(@RequestBody Post post) {
-        Users user = iUserService.findUserById(post.getUsers().getId());
+    public ResponseEntity<Post> create(@RequestBody PostDto postDto) {
+        Users user = iUserService.findUserById(postDto.getUsers().getId());
+        Post post = new Post();
         post.setUsers(user);
         CheckDate checkDate = new CheckDate();
         post.setTime(checkDate.getTimePost());
-        post.setPublic(true);
+        if (postDto.getStatus().equals("Public")){
+            post.setPublic(true);
+        }else {
+            post.setPublic(false);
+        }
+        post.setContent(postDto.getContent());
+        post.setImage(postDto.getImage());
         return new ResponseEntity<>(postService.save(post), HttpStatus.OK);
     }
 
@@ -183,10 +200,7 @@ public class PostController {
     @PutMapping("/{id}/editComment")
     public ResponseEntity<?> editComment(@PathVariable Long id, @RequestBody Comment comment) {
         Comment commentEdit = iCommentService.findById(id);
-        commentEdit.setId(id);
         commentEdit.setContent(comment.getContent());
-        commentEdit.setPost(comment.getPost());
-        commentEdit.setUsers(comment.getUsers());
         CheckDate checkDate = new CheckDate();
         commentEdit.setTime(checkDate.getTimePost());
         iCommentService.save(commentEdit);

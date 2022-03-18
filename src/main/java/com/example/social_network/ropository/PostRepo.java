@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface PostRepo extends JpaRepository<Post, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT * FROM socialnetwork.post order by time DESC")
+    @Query(nativeQuery = true, value = "SELECT * FROM socialnetwork.post where is_public = 1 order by time DESC")
     List<Post> findPostToTime();
 
     @Query(nativeQuery = true, value = "select * from socialnetwork.post where post.users_id =:users_id ")
