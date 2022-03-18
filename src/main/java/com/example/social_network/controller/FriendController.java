@@ -74,9 +74,10 @@ public class FriendController {
     }
 
     // hủy yêu cầu kb
-    @DeleteMapping("/deleteWaitFriend/{idUser}/{idFriend}")
-    public ResponseEntity deleteWaitFriend(@PathVariable Long idUser,@PathVariable Long idFriend) {
+    @DeleteMapping("/deleteWaitFriend/{idUser}/{idFriend}/{idNotif}")
+    public ResponseEntity deleteWaitFriend(@PathVariable Long idUser,@PathVariable Long idFriend,@PathVariable Long idNotif) {
         friendService.deleteWaitAddFriend(idUser, idFriend);
+        notificationService.deleteNotification(idNotif);
         return new ResponseEntity(HttpStatus.OK);
     }
 
