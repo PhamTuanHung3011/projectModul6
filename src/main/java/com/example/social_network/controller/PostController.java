@@ -49,7 +49,7 @@ public class PostController {
 
 
 
-//    show list thì yêu cầu sắp xếp bài theo thời gian! (phục vụ trang home), trang tường nhà thiết kế sau( ý đồ xét lại list theo id user)
+    //    show list thì yêu cầu sắp xếp bài theo thời gian! (phục vụ trang home), trang tường nhà thiết kế sau( ý đồ xét lại list theo id user)
 //    phân trang theo pagination scroll
     @GetMapping
     public List<PostImgdto> findAll() {
@@ -59,30 +59,32 @@ public class PostController {
         List<Likes> likesList = iLikeServiceImpl.findAll();
 
         for (Post post : posts) {
-            PostImgdto postDto = new PostImgdto(post.getId(), post.getContent(), post.isPublic(), post.getImage(), post.getTime(), true, post.getUsers());
+            PostImgdto postDto = new PostImgdto(post);
+
             for (Likes like : likesList) {
                 if (Objects.equals(like.getUsers().getId(), user.getId()) && Objects.equals(like.getPost().getId(), post.getId())) {
                     postDto.setStatus(false);
                 }
             }
-            postDto.setComments(iCommentService.findListCommentByIdPost(post.getId()));
+
+            postDto.setComments(iCommentService.findListCommentByIdPost(postDto.getPost().getId()));
             postDtos.add(postDto);
         }
         return postDtos;
     }
 
-   @GetMapping("/findAllByUserId/{idUser}")
-   public ResponseEntity <List<Post>> findPostByUserId(@PathVariable Long idUser) {
-       List<Post> postListByUserId =  postService.findPostByUserId(idUser);
-       return new ResponseEntity<>(postListByUserId, HttpStatus.OK);
-   }
+    @GetMapping("/findAllByUserId/{idUser}")
+    public ResponseEntity <List<Post>> findPostByUserId(@PathVariable Long idUser) {
+        List<Post> postListByUserId =  postService.findPostByUserId(idUser);
+        return new ResponseEntity<>(postListByUserId, HttpStatus.OK);
+    }
 
 
 
 
     @PostMapping("/create")
     public ResponseEntity<Post> create(@RequestBody Post post) {
-        Users user = iUserService.findById(post.getUsers().getId());
+        Users user = iUserService.findUserById(post.getUsers().getId());
         post.setUsers(user);
         CheckDate checkDate = new CheckDate();
         post.setTime(checkDate.getTimePost());
@@ -141,7 +143,7 @@ public class PostController {
         List<PostImgdto> postDtoList = findAll();
         List<Long> listLike = new ArrayList<>();
         for (PostImgdto postDto : postDtoList) {
-            listLike.add(iLikeServiceImpl.getLikeNumber(postDto.getId()));
+            listLike.add(iLikeServiceImpl.getLikeNumber(postDto.getPost().getId()));
         }
         return new ResponseEntity<>(listLike, HttpStatus.OK);
     }
@@ -150,15 +152,24 @@ public class PostController {
         List<PostImgdto> postList = findAll();
         List<List<Comment>> comments = new ArrayList<>();
         for (PostImgdto post : postList) {
-            comments.add(iCommentService.findListCommentByIdPost(post.getId()));
+            comments.add(iCommentService.findListCommentByIdPost(post.getPost().getId()));
         }
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}/findCommentByPostId")
+    public ResponseEntity<?> findListCommentByIdPost(@PathVariable Long id) {
+        List<Comment> commentList = iCommentService.findListCommentByIdPost(id);
+        return new ResponseEntity<>(commentList,HttpStatus.OK);
+    }
+
     @PostMapping("/{id}/createComment")
     public ResponseEntity<?> createComment(@RequestBody Comment comment, @PathVariable Long id) {
+
         CheckDate checkDate = new CheckDate();
         comment.setTime(checkDate.getTimePost());
         comment.setPost(postService.findById(id).get());
+        comment.setUsers(iUserService.findUserById(comment.getUsers().getId()));
         iCommentService.save(comment);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -167,6 +178,25 @@ public class PostController {
     public ResponseEntity<?> deleteComment(@PathVariable Long id) {
         iCommentService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/editComment")
+    public ResponseEntity<?> editComment(@PathVariable Long id, @RequestBody Comment comment) {
+        Comment commentEdit = iCommentService.findById(id);
+        commentEdit.setId(id);
+        commentEdit.setContent(comment.getContent());
+        commentEdit.setPost(comment.getPost());
+        commentEdit.setUsers(comment.getUsers());
+        CheckDate checkDate = new CheckDate();
+        commentEdit.setTime(checkDate.getTimePost());
+        iCommentService.save(commentEdit);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/findCommentById")
+    public ResponseEntity<?> findConmentById(@PathVariable Long id) {
+        Comment comment = iCommentService.findById(id);
+        return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
 }

@@ -1,9 +1,9 @@
 package com.example.social_network.dto.post_img;
 
-import com.example.social_network.model.Comment;
-import com.example.social_network.model.Image;
-import com.example.social_network.model.Post;
-import com.example.social_network.model.Users;
+import com.example.social_network.model.*;
+import lombok.Data;
+
+import com.example.social_network.model.*;
 import lombok.Data;
 
 import javax.persistence.ManyToOne;
@@ -14,24 +14,49 @@ import java.util.List;
 
 @Data
 public class PostImgdto {
-    private Long id;
-    private String content;
-    private boolean isPublic;
-    private String image;
-    private LocalDateTime time;
+    private Post post;
     private boolean status;
-    private Users users;
     private List<Comment> comments;
+    private List<Likes> likes;
 
+    public PostImgdto(Post post) {
+        this.post = post;
+    }
 
-    public PostImgdto(Long id, String content, boolean aPublic, String image, LocalDateTime time, boolean b, Users users) {
-        this.id = id;
-        this.content = content;
-        this.isPublic = aPublic;
-        this.image = image;
-        this.time = time;
-        this.status = b;
-        this.users = users;
+    public PostImgdto(Post post, boolean status) {
+        this.post = post;
+        this.status = status;
+    }
 
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public List<Likes> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Likes> likes) {
+        this.likes = likes;
     }
 }

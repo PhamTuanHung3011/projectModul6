@@ -20,4 +20,5 @@ public class Comment {
 
     @ManyToOne
     Post post;
+
 }

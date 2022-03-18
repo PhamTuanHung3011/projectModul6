@@ -36,10 +36,10 @@ public class IUserServiceImpl implements IUserService {
         return iUserRepo.save(user);
     }
 
-    @Override
-    public Users findById(Long id) {
-        return iUserRepo.findById(id).get();
-    }
+//    @Override
+//    public Users findById(Long id) {
+//        return iUserRepo.findById(id).get();
+//    }
 
     @Override
     public List<Users> getAll() {

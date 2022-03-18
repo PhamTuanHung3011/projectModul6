@@ -31,7 +31,7 @@ public class NotificationImpl implements INotificationService {
                 nameSender = u.getName();
             }
         }
-        Notification notification = new Notification(LocalDateTime.now(),"Bạn có lời mời kết bạn từ " + nameSender, userService.findById(idUser1), userService.findById(idUser2));
+        Notification notification = new Notification(LocalDateTime.now(),"Bạn có lời mời kết bạn từ " + nameSender, userService.findUserById(idUser1), userService.findUserById(idUser2));
         notificationRepo.save(notification);
     }
 
