@@ -17,9 +17,13 @@ public interface FriendRepo extends JpaRepository<Friend, Long> {
     @Query(nativeQuery = true,value = "select * from friend where (friend.user1_id =:idUser or friend.user2_id =:idUser) and (friend.user1_id =:idFriend or friend.user2_id =:idFriend) and status = 1")
     Friend findAddedFriendById (@Param(value = "idUser")Long idUser,@Param(value = "idFriend")Long idFriend);
 
+//    // tìm friend bạn bè để xóa
+//    @Query(nativeQuery = true,value = "select * from friend where (friend.user1_id =:idUser or friend.user2_id =:idUser) and (friend.user1_id =:idFriend or friend.user2_id =:idFriend) and status = 0")
+//    Friend findWaitAddFriendById (@Param(value = "idUser")Long idUser,@Param(value = "idFriend")Long idFriend);
+
     // tìm friend bạn bè để xóa
-    @Query(nativeQuery = true,value = "select * from friend where (friend.user1_id =:idUser or friend.user2_id =:idUser) and (friend.user1_id =:idFriend or friend.user2_id =:idFriend) and status = 0")
-    Friend findWaitAddFriendById (@Param(value = "idUser")Long idUser,@Param(value = "idFriend")Long idFriend);
+    @Query(nativeQuery = true,value = "select * from friend where ((friend.user1_id =:idSender and friend.user2_id =:idReceive))and status = 0")
+    Friend findWaitAddFriendById (@Param(value = "idSender")Long idSender,@Param(value = "idReceive")Long idReceive);
 
 
 }

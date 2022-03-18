@@ -15,6 +15,7 @@ public class Notification {
     private LocalDateTime since;
 
     private String content;
+    private String status;
 
     @ManyToOne
     private Users from;

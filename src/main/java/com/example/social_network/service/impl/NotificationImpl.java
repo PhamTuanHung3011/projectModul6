@@ -18,6 +18,12 @@ public class NotificationImpl implements INotificationService {
     @Autowired
     IUserServiceImpl userService;
 
+
+    @Override
+    public List<Notification> listNotification(Long idUser) {
+        return notificationRepo.getNotification(idUser);
+    }
+
     @Override
     public List<Notification> listNotification() {
         return notificationRepo.findAll();
@@ -31,7 +37,10 @@ public class NotificationImpl implements INotificationService {
                 nameSender = u.getName();
             }
         }
-        Notification notification = new Notification(LocalDateTime.now(),"Bạn có lời mời kết bạn từ " + nameSender, userService.findById(idUser1), userService.findById(idUser2));
+        Notification notification = new Notification(LocalDateTime.now(),
+                "Bạn có lời mời kết bạn từ " + nameSender,
+                userService.findById(idUser1), userService.findById(idUser2));
+        notification.setStatus("Pending");
         notificationRepo.save(notification);
     }
 
@@ -54,4 +63,11 @@ public class NotificationImpl implements INotificationService {
     public void deleteNotification(Long id) {
         notificationRepo.deleteById(id);
     }
+
+    @Override
+    public void save(Notification notification) {
+        notificationRepo.save(notification);
+    }
+
+
 }

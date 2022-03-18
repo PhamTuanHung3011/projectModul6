@@ -1,6 +1,7 @@
 package com.example.social_network.controller;
 
 import com.example.social_network.model.Friend;
+import com.example.social_network.model.Notification;
 import com.example.social_network.model.Users;
 import com.example.social_network.service.IFriendService;
 import com.example.social_network.service.INotificationService;
@@ -74,9 +75,9 @@ public class FriendController {
     }
 
     // hủy yêu cầu kb
-    @DeleteMapping("/deleteWaitFriend/{idUser}/{idFriend}")
-    public ResponseEntity deleteWaitFriend(@PathVariable Long idUser,@PathVariable Long idFriend) {
-        friendService.deleteWaitAddFriend(idUser, idFriend);
+    @DeleteMapping("/deleteWaitFriend/{idSender}/{idRece}")
+    public ResponseEntity deleteWaitFriend(@PathVariable Long idSender,@PathVariable Long idRece) {
+        friendService.deleteWaitAddFriend(idSender, idRece);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -95,10 +96,11 @@ public class FriendController {
     }
 
     // đồng ý kb
-    @PutMapping("/agreeMakeFriend/{idFriend}/{idNotif}")
-    public ResponseEntity<Friend> agreeMakeFriend(@PathVariable Long idFriend,@PathVariable Long idNotif) {
-        friendService.setFriend(idFriend);
-        notificationService.deleteNotification(idNotif);
+    @PutMapping("/agreeMakeFriend/{idSender}")
+    public ResponseEntity<Friend> agreeMakeFriend(@PathVariable Long idSender, @RequestParam Long idRece, @RequestBody Notification notification) {
+        friendService.setFriend(idSender,idRece);
+notification.setStatus("ok");
+notificationService.save(notification);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
