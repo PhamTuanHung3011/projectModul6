@@ -95,9 +95,9 @@ public class FriendController {
     }
 
     // đồng ý kb
-    @PutMapping("/agreeMakeFriend/{idFriend}/{idNotif}")
-    public ResponseEntity<Friend> agreeMakeFriend(@PathVariable Long idFriend,@PathVariable Long idNotif) {
-        friendService.setFriend(idFriend);
+    @PutMapping("/agreeMakeFriend/{idUser}/{idFriend}/{idNotif}")
+    public ResponseEntity<Friend> agreeMakeFriend(@PathVariable Long idUser,@PathVariable Long idFriend,@PathVariable Long idNotif) {
+        friendService.setFriend(idUser,idFriend);
         notificationService.deleteNotification(idNotif);
         return new ResponseEntity<>(HttpStatus.OK);
     }

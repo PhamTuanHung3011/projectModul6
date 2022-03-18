@@ -44,7 +44,7 @@ public class LikeServiceImpl implements ILikeService {
 
     @Override
     public Long countLikeComment(Long idComment) {
-        return likeRepo.numberLikesPost(idComment);
+        return likeRepo.numberLikesComment(idComment);
     }
 
     @Override
